@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from scipy.signal import butter, lfilter
     
 def butter_bandpass_filter(data, lowcut, highcut, fs, btype='band', order=5):

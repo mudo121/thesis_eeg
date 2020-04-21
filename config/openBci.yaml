@@ -1,0 +1,21 @@
+---
+  deviceName: "open_bci"
+  samplingRate: 125 # Hz
+
+  # For bandpass filtering
+  lowcutFreq_bandpass: 0.3 # Hz
+  highcutFreq_bandpass: 60 # Hz
+
+  # Bandstopp filtering
+  lowcutFreq_bandstopp: 49 # Hz
+  highcutFreq_bandstopp: 51 # Hz
+
+  # replace outliers
+  lowerThreshold: -200
+  upperThreshold: 200
+
+  maxFaultyRate: 0.15 # Lower -> more better quality epochs | Higher -> more noisy epochs
+  epochWindowSize: 2 # in seconds 
+  overlap: 1 # in seconds - or insert None for no overlap
+
+  frequencyBands : 

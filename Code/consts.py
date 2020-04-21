@@ -1,2 +1,5 @@
 DEVICES_MUSE_MONITOR = "muse_monitor"
 DEVICES_OPEN_BCI = "open_bci"
+
+SUPPORTED_DEVICES = [DEVICES_MUSE_MONITOR,
+                     DEVICES_OPEN_BCI]
