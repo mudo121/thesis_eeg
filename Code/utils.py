@@ -3,6 +3,7 @@
 import pandas as pd
 from typing import List
 import numpy as np
+from typing import List
 
 def loadCsvFile(filePath : str) -> pd.DataFrame:
     ''' Loads a csv file and returns a pandas data frame '''
@@ -18,3 +19,10 @@ def convertDataFrameToNumpyArray(pd : pd.DataFrame, channelNames : List) -> np.n
         npArrayList.append(pd[channel].to_numpy())
         
     return np.array(npArrayList)
+
+def createChannelList(numberOfChannels: int) -> List:
+    ''' Create a list of channel names channel_1, channel_2, etc. and returns as a list'''
+    channelList = []
+    for i in range(1, numberOfChannels+1):
+        channelList.append("channel_{}".format(i))
+    return channelList

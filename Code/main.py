@@ -16,6 +16,9 @@ from Signal_Transfomers import (ConvertIndexToTimestamp, ExtractSignals,
 from Pre_Processing_Transformers import (SlidingWindow, NormalizeData, DeleteFaultyEpochs,
                                             ReplaceNaNs)
 
+
+from Feature_Extraction_Transformer import (Frequency_Features)
+
 from plotFunctions import plotInteractiveEpochs
 
 
@@ -71,14 +74,15 @@ def pre_process_signal(df : pd.DataFrame, config : Dict) -> pd.Series:
     epochSeries = pre_processing_pipeline.fit_transform(df)
     return epochSeries
 
-def feature_extraction(epochSeries : pd.Series) -> epochSeries:
+def feature_extraction(epochSeries : pd.Series, config : Dict) -> pd.Series:
     ''' Extract features from the generated epoch series 
     
     Do the whole feature extraction in a pipeline
     '''
 
     feature_extraction_pipeline = Pipeline([
-        ("", )
+        ("Frequency Band feature extraction", Frequency_Features(samplingRate=config['samplingRate'], frequencyBands=config['frequencyBands'],
+                                                                numberOfChannels=config['numberOfChannels'], epochSizeCalculation=config['epochSizeCalculation']))
     ])
 
     epochSeries = feature_extraction_pipeline.fit_transform(epochSeries)
@@ -107,25 +111,99 @@ def main():
         # Filter the signal
         df = filter_signal(df=df, config=yamlConfig, starttime=starttime)
 
+
         # Pre-process the signal
         epochSeries = pre_process_signal(df=df, config=yamlConfig)
-
         # Save epochSeries
         print("Saving epoch series...")
-        #epochSeries.to_csv(os.path.join(mainDir,'generatedData','epochSeries.csv'))
         epochSeries.to_pickle(os.path.join(mainDir,'generatedData','epochSeries.pkl'))
+
+
+        # Extract Frequency Features
+        frequencyFeatureDf = feature_extraction(epochSeries=epochSeries, config=yamlConfig)
+        # Save frequency features dataframe
+        print("Saving frequency feature dataframe...")
+        frequencyFeatureDf.to_pickle(os.path.join(mainDir,'generatedData','frequencyFeaturesDf.pkl'))
 
     else:
         # load data
         print("Loading data...")
         epochSeries = pd.read_pickle(os.path.join(mainDir,'generatedData','epochSeries.pkl'))
+        
+        frequencyFeatureDf = pd.read_pickle(os.path.join(mainDir,'generatedData','frequencyFeaturesDf.pkl'))
+
+    #print(epochSeries[0].head())
+    #plt.show(epochSeries[0].plot())
+
+
+    print(frequencyFeatureDf)
+
+
+target_dict = {"awake" : 0, "non-awake" : 1, "unlabeled" : 2}
+
+def createDataAndTargetArray(awakeDf, non_awakeDf, unlabeledDf):
+    targetArray = []
+    dataDf = pd.DataFrame()
     
+    if awakeDf is not None:
+        startCounter = 0
+        if dataDf.empty:
+            # Do this because then it will copy also all columns, then we can append stuff
+            dataDf = awakeDf.loc[:1]
+            
+            # append to awake into the target array
+            targetArray.append(target_dict['awake'])
+            targetArray.append(target_dict['awake'])
+            startCounter = 2
+            
+        # We have to start at 2 if we added 0:1 already
+        for i in range(startCounter, len(awakeDf)):
+            dataDf = dataDf.append(awakeDf.loc[i], ignore_index=True)
+            targetArray.append(target_dict['awake'])
+
+            
+    if non_awakeDf is not None:
+        startCounter = 0
+        if dataDf.empty:
+            # Do this because then it will copy also all columns, then we can append stuff
+            dataDf = non_awakeDf.loc[:1]
+            
+            # append to awake into the target array
+            targetArray.append(target_dict['non-awake'])
+            targetArray.append(target_dict['non-awake'])
+            startCounter = 2
+        
+        # We have to start at 2 if we added 0:1 already
+        for i in range(startCounter, len(non_awakeDf)):
+            dataDf = dataDf.append(non_awakeDf.loc[i], ignore_index=True)
+            targetArray.append(target_dict['non-awake'])
+            
+            
+    if unlabeledDf is not None:
+        startCounter = 0
+        if dataDf.empty:
+            # Do this because then it will copy also all columns, then we can append stuff
+            dataDf = unlabeledDf.loc[:1]
+            
+            # append to awake into the target array
+            targetArray.append(target_dict['unlabeled'])
+            targetArray.append(target_dict['unlabeled'])
+            startCounter = 2
+        
+        # We have to start at 2 if we added 0:1 already
+        for i in range(startCounter, len(unlabeledDf)):
+            dataDf = dataDf.append(unlabeledDf.loc[i], ignore_index=True)
+            targetArray.append(target_dict['unlabeled'])
 
 
-    print(epochSeries[0].head())
-    plt.show(epochSeries[0].plot())
+            
+            
+            
+            return (dataDf, np.array(targetArray))
 
-    #plotInteractiveEpochs(epochSeries)
+dataDf, targetArray = createDataAndTargetArray(awakeDf = frequencyFeatureDf_awake,
+                                               non_awakeDf = frequencyFeatureDf_non_awake,
+                                               unlabeledDf = None)
 
 if __name__ == "__main__":
     main()

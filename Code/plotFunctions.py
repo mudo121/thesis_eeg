@@ -75,5 +75,54 @@ def plotInteractiveEpochs(epochSeries : pd.Series = None):
     plt.show()
 
 
+def plotFeatureEpochs(featureEpochs : pd.Series, columnsToUse = None, channelsToUse = None):
+    ''' Plot features for a complete series
+    
+    @param featureEpochs: A series of dataframes where the features are stored
+    @param columnsToUse: A list of columns to show - If None use all
+    @parm channelsToUse: A list of channels to show - If None use all
+    
+    Example: 
+        channelsToUse = ["channel_17", "channel_18"]
+        columnsToUse = ['Delta', 'Alpha', 'Theta','Beta','Gamma', 'TotalAbsPow']
+        plotFeatureEpochs(epochSeriesFeatures, columnsToUse=columnsToUse, channelsToUse=channelsToUse)
+    '''
+    
+    # the x-line is just the number of epochs (for now)
+    xValues = np.arange(0, len(featureEpochs))
+    
+    # Use a dict to store multiples dicts with lists
+    yChannelValuesDict = {}
+    
+    # init the dict with empty dicts which are containting empty lists
+    for channel in channelsToUse:
+        yChannelValuesDict[channel] = {}
+        for column in columnsToUse:
+            yChannelValuesDict[channel][column] = []
+    
+    
+    for epoch in featureEpochs: # loop through all epochs
+        for column in columnsToUse: # loop through all columns we want to show
+            for channel in channelsToUse: # loop thorugh all channels
+                try:
+                    columnValue = epoch[column].filter(items=[channel], axis='index').iloc[0]
+                except IndexError: # If there is no value, set it to NaN
+                    columnValue = np.nan
+                yChannelValuesDict[channel][column].append(columnValue) # append the column value and re-assign it
+    
+    
+    
+    # plot all yValues
+    
+    for channel, channelValueDict in yChannelValuesDict.items():
+        plt.figure(figsize=(20,5))
+        for columnName, columnValueList in channelValueDict.items():
+            plt.plot(xValues, columnValueList)
+        
+        plt.legend(columnsToUse, loc="upper left")
+        plt.title("{ch} - Bandpower over all Epochs".format(ch=channel))
+        plt.ylabel("Relative power spectral density")
+        plt.xlabel("Epochs")
+
 if __name__ == "__main__":
     plotInteractiveEpochs()
