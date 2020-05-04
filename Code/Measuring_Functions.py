@@ -53,38 +53,38 @@ def getChannelUsageInEpochSeries(epochSeries : pd.Series, featureSeries : bool, 
 
 
 
-    def calculateMeanOverEpochs(valueList : List, numberOfEpochs : int = 5) -> List:
-        ''' Calculate the mean over a given number of epochs
-            e.g. if numberOfEpoch is 5 then the mean will get calculated from epoch 0-4; 5-9; 10-14; ...
-            
-        @param valueList: A list of values, where each entry represnts one epoch
-        @param numberOfEpochs: A number which defines how many epochs should included in the calculations
-        '''
-        meanValueList = []
-        start = 0
-        end = numberOfEpochs
-        for i in range(0, len(valueList), numberOfEpochs):
-            meanValue = statistics.mean(valueList[start:end])
-            meanValueList.append(meanValue)
-            start += numberOfEpochs
-            end += numberOfEpochs
+def calculateMeanOverEpochs(valueList : List, numberOfEpochs : int = 5) -> List:
+    ''' Calculate the mean over a given number of epochs
+        e.g. if numberOfEpoch is 5 then the mean will get calculated from epoch 0-4; 5-9; 10-14; ...
+        
+    @param valueList: A list of values, where each entry represnts one epoch
+    @param numberOfEpochs: A number which defines how many epochs should included in the calculations
+    '''
+    meanValueList = []
+    start = 0
+    end = numberOfEpochs
+    for i in range(0, len(valueList), numberOfEpochs):
+        meanValue = statistics.mean(valueList[start:end])
+        meanValueList.append(meanValue)
+        start += numberOfEpochs
+        end += numberOfEpochs
 
-        return meanValueList
+    return meanValueList
 
-    def calculateStandardDeviationOverEpochs(valueList : List, numberOfEpochs : int = 5) -> List:
-        ''' Calculate the standard deviation over a given number of epochs
-            e.g. if numberOfEpoch is 5 then the standard deviation will get calculated from epoch 0-4; 5-9; 10-14; ...
-            
-        @param valueList: A list of values, where each entry represnts one epoch
-        @param numberOfEpochs: A number which defines how many epochs should included in the calculations
-        '''
-        stDev_valueList = []
-        start = 0
-        end = numberOfEpochs
-        for i in range(0, len(valueList), numberOfEpochs):
-            value = statistics.stdev(valueList[start:end])
-            stDev_valueList.append(value)
-            start += numberOfEpochs
-            end += numberOfEpochs
+def calculateStandardDeviationOverEpochs(valueList : List, numberOfEpochs : int = 5) -> List:
+    ''' Calculate the standard deviation over a given number of epochs
+        e.g. if numberOfEpoch is 5 then the standard deviation will get calculated from epoch 0-4; 5-9; 10-14; ...
+        
+    @param valueList: A list of values, where each entry represnts one epoch
+    @param numberOfEpochs: A number which defines how many epochs should included in the calculations
+    '''
+    stDev_valueList = []
+    start = 0
+    end = numberOfEpochs
+    for i in range(0, len(valueList), numberOfEpochs):
+        value = statistics.stdev(valueList[start:end])
+        stDev_valueList.append(value)
+        start += numberOfEpochs
+        end += numberOfEpochs
 
-        return stDev_valueList
+    return stDev_valueList
