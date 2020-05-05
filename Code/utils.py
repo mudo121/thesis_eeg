@@ -3,9 +3,10 @@
 import pandas as pd
 from typing import List
 import numpy as np
-from typing import List
+from typing import List, Dict
+import yaml
 
-def loadCsvFile(filePath : str) -> pd.DataFrame:
+def readFileCSV(filePath : str) -> pd.DataFrame:
     ''' Loads a csv file and returns a pandas data frame '''
     if filePath.endswith('.csv'):
         return pd.read_csv(filePath)
@@ -26,3 +27,27 @@ def createChannelList(numberOfChannels: int) -> List:
     for i in range(1, numberOfChannels+1):
         channelList.append("channel_{}".format(i))
     return channelList
+
+def loadConfigFile(deviceName : str) -> Dict:
+
+    if deviceName == "openBci":
+        configFilePath = "D:/Masterthesis/thesis_eeg/config/openBci.yaml"
+    elif deviceName == "muse-lsl":
+        configFilePath = "D:/Masterthesis/thesis_eeg/config/muse_lsl.yaml"
+    elif deviceName == "neuroscan":
+        configFilePath = "D:/Masterthesis/thesis_eeg/config/neuroscan.yaml"
+    else:
+        configFilePath = ""
+        raise Exception("There is no confiFile for the device '{}'".format(deviceName))
+        return None
+    
+    print ("Loading the config file for {}".format(deviceName))
+
+    with open(configFilePath, 'r') as stream:
+        try:
+            yamlConfig = yaml.safe_load(stream)
+            return yamlConfig
+        except yaml.YAMLError as exc:
+            print(exc)
+            return None
+

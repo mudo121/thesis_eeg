@@ -124,5 +124,46 @@ def plotFeatureEpochs(featureEpochs : pd.Series, columnsToUse = None, channelsTo
         plt.ylabel("Relative power spectral density")
         plt.xlabel("Epochs")
 
+
+def plot_magnitudeFreq_and_PSD(data, samplingRate, signalName):
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(18, 5)) # create 1 x 2 plot
+
+    axes[0].set_title("Magnitude Spectrum - {}".format(signalName))
+    axes[0].magnitude_spectrum(data, Fs=samplingRate, scale='dB', color='C1')
+
+    axes[1].set_title("PSD - {}".format(signalName))
+    axes[1].psd(data, Fs=samplingRate)
+
+    fig.tight_layout()
+    plt.show()
+
+
+def plot_feature(feature_df, featureName = None, frequencyBand = None, channel = None):
+    '''
+    This function plots feature according to the given parameters
+    
+    
+    @param str featureName: mean_bandpower_list | mean_bandpower_lower_envelope | mean_bandpower_upper_envelope | std_dev_bandpower_lower_envelope | ...
+    @param str frequencyBand: E.g. Alpha, Beta, Gamma
+    @param str channel: 1, 2, 3, or None for all
+    
+    If one of the param is None then it doesn't get filtered
+    
+    '''
+    if featureName != None:
+        feature_df = feature_df.filter(like=featureName)
+        
+    if frequencyBand != None:
+        feature_df = feature_df.filter(like=frequencyBand)
+        
+    if channel != None:
+        feature_df = feature_df.filter(like=channel)
+    
+    plt.figure(figsize=(20,5))
+    
+    for column in feature_df:
+        plt.plot(feature_df[column], label=column)
+    plt.legend()
+
 if __name__ == "__main__":
     plotInteractiveEpochs()

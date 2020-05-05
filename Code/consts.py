@@ -1,8 +1,11 @@
 DEVICES_MUSE_MONITOR = "muse_monitor"
 DEVICES_OPEN_BCI = "open_bci"
+DEVICES_MUSE_LSL = "muse-lsl"
+DEVICES_NEUROSCAN = "neuroscan"
 
 SUPPORTED_DEVICES = [DEVICES_MUSE_MONITOR,
-                     DEVICES_OPEN_BCI]
+                     DEVICES_OPEN_BCI,
+                     DEVICES_MUSE_LSL]
 
 INDEX_BANDPOWER_LIST = 'bandpower_list'
 INDEX_BANDPOWER_UPPER_ENVELOPE_LIST = 'bandpower_upper_envelope_list'
