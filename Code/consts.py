@@ -7,6 +7,9 @@ SUPPORTED_DEVICES = [DEVICES_MUSE_MONITOR,
                      DEVICES_OPEN_BCI,
                      DEVICES_MUSE_LSL]
 
+
+target_dict = {"awake" : 1, "non-awake" : 0, "unlabeled" : 2}
+
 INDEX_BANDPOWER_LIST = 'bandpower_list'
 INDEX_BANDPOWER_UPPER_ENVELOPE_LIST = 'bandpower_upper_envelope_list'
 INDEX_BANDPOWER_LOWER_ENVELOPE_LIST = 'bandpower_lower_envelope_list'

@@ -27,7 +27,6 @@ def filter_signal(df : pd.DataFrame, config : Dict, starttime=None) -> pd.DataFr
     signal_processing_pipeline = Pipeline([
         ('Convert Index to Timestamp', ConvertIndexToTimestamp(device=config['deviceName'], starttime=starttime)),
         ('Extract Signals', ExtractSignals(device=config['deviceName'])),
-        ('Resample Signal', ResampleSignal(samplingRate=config['samplingRate'], resampleRate=config['resampleRate'])),
         ('Bandpass Filter', BandpassFilter(device=config['deviceName'], lowcufreq=config['lowcutFreq_bandpass'], highcutfreq=config['highcutFreq_bandpass'], samplingRate=config['samplingRate'])),
         ('Bandstop Filter', BandstopFilter(device=config['deviceName'], lowcufreq=config['lowcutFreq_bandstopp'], highcutfreq=config['highcutFreq_bandstopp'], samplingRate=config['samplingRate'])),
         ('Replace Outliers', ReplaceOutliers(device=config['deviceName'], lowerThreshold=config['lowerThreshold'], upperThreshold=config['upperThreshold']))

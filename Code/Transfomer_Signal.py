@@ -183,8 +183,15 @@ class ConvertIndexToTimestamp(BaseEstimator, TransformerMixin):
 
         elif self.device == DEVICES_NEUROSCAN:
             # We only have to delete those 2 columns
-            del df['Unnamed: 0']
-            del df['time'] # those are just numbers
+            try:
+                del df['Unnamed: 0']
+            except Exception as e:
+                pass
+
+            try:
+                del df['time'] # those are just numbers
+            except Exception as e:
+                pass
 
         else:
             raise NotImplementedError("So far only those are supported: {}".format(SUPPORTED_DEVICES))

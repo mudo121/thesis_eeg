@@ -29,6 +29,7 @@ def createChannelList(numberOfChannels: int) -> List:
     return channelList
 
 def loadConfigFile(deviceName : str) -> Dict:
+    ''' Load a yaml config file with the given device name '''
 
     if deviceName == "openBci":
         configFilePath = "D:/Masterthesis/thesis_eeg/config/openBci.yaml"
@@ -39,7 +40,6 @@ def loadConfigFile(deviceName : str) -> Dict:
     else:
         configFilePath = ""
         raise Exception("There is no confiFile for the device '{}'".format(deviceName))
-        return None
     
     print ("Loading the config file for {}".format(deviceName))
 
@@ -51,3 +51,21 @@ def loadConfigFile(deviceName : str) -> Dict:
             print(exc)
             return None
 
+def filterDfByColumns(df : pd.DataFrame, columnsToKeep : List):
+    ''' Filter the given df by the columns and keep only them
+    
+    E.g. columnsToKeep is "channel_1_" then every column gets deleted except this column
+    '''
+    if df is None:
+        return df
+    
+    if columnsToKeep is None:
+        return df
+    
+    requiredChannelList = []
+    for dfColumn in df.columns:
+        for requiredChannel in columnsToKeep:
+            if requiredChannel in dfColumn:
+                requiredChannelList.append(dfColumn)
+        
+    return df.filter(requiredChannelList)

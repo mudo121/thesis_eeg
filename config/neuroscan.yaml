@@ -1,7 +1,6 @@
 ---
   deviceName: "neuroscan"
-  samplingRate: 1000 # Hz
-  resampleRate: 256 # Hz - Set to 0 if the normal sampling should be used
+  samplingRate: 256 # Hz
 
   numberOfChannels: 40
 
@@ -11,7 +10,7 @@
 
   # For bandpass filtering
   lowcutFreq_bandpass: 0.5 # Hz
-  highcutFreq_bandpass: 250 # Hz - has to be that high, probably because of that high sampling rate
+  highcutFreq_bandpass: 60 # Hz
 
   # Bandstopp filtering
   lowcutFreq_bandstopp: 49 # Hz

@@ -32,7 +32,8 @@ def getChannelUsageInEpochSeries(epochSeries : pd.Series, featureSeries : bool, 
 
     else: # normal epoch series
         for epoch in epochSeries:
-            for columns in epochSeries[1].columns:
+            #for columns in epochSeries[1].columns:
+            for columns in epoch.columns:
                 try:
                     foundChannels[columns] += 1
                 except KeyError: # if not in the dict, add it
@@ -51,6 +52,32 @@ def getChannelUsageInEpochSeries(epochSeries : pd.Series, featureSeries : bool, 
 
     return mostUsedChannelsListDesc
 
+
+def faultyFeaturesNames(df : pd.DataFrame, maxPercentageMissing = 0.0) -> pd.Series:
+    ''' Measure the most stable feature, by counting the NaN Values and return a series of columns which are not acceptable
+
+    Return a list of column names where the maximum percentage is higher then the given parameter
+    So the returned columns are not acceptable and have to be deleted.
+    If no column name gets returned then every column is below or equal of 'maxPercentage'
+    '''
+    if df is None:
+        return df
+    
+    percent_missing = df.isnull().sum() * 100 / len(df)
+    missing_value_df = pd.DataFrame({'column_name': df.columns,
+                                 'percent_missing': percent_missing})
+    
+    missing_value_df.sort_values('percent_missing', inplace=True)
+    
+    missing_value_df = missing_value_df[missing_value_df['percent_missing'] > maxPercentageMissing]
+    return missing_value_df['column_name']
+
+def countRecordsOfDf(df : pd.DataFrame) -> int:
+    ''' Count a df with checks if its empty or None '''
+    if df is None or df.empty:
+        return 0
+    else:
+        return len(df)
 
 
 def calculateMeanOverEpochs(valueList : List, numberOfEpochs : int = 5) -> List:

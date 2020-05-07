@@ -1,7 +1,6 @@
 ---
   deviceName: "open_bci"
   samplingRate: 125 # Hz
-  resampleRate: 0 # Hz If 0 set the normal sampling rate will be used
 
   numberOfChannels: 19
 

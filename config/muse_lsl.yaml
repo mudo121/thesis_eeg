@@ -1,7 +1,6 @@
 ---
   deviceName: "muse-lsl"
   samplingRate: 256 # Hz - confirm!
-  resampleRate: 0 # Hz If 0 set the normal sampling rate will be used
   
   numberOfChannels: 4
 
