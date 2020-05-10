@@ -18,9 +18,9 @@ testSubjectDict = { 1 : {"Device" : DEVICES_OPEN_BCI,
 
 
 onlineEegDataDict = { 1 : {"Device" : DEVICES_NEUROSCAN,
-                           "normalCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/1/Normal_state.csv",
-                           "fatigueCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/1/Fatigue_state.csv"},
+                           "normalCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/1/Normal_state_256hz.csv",
+                           "fatigueCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/1/Fatigue_state_256hz.csv"},
                            
                       2 : {"Device" : DEVICES_NEUROSCAN,
-                           "normalCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/2/Normal_state.csv",
-                           "fatigueCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/2/Fatigue_state.csv"}}
+                           "normalCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/2/Normal_state_256hz.csv",
+                           "fatigueCsvPath" : "D:/Masterthesis/EEG_Data/eeg_data_online/2/Fatigue_state_256hz.csv"}}

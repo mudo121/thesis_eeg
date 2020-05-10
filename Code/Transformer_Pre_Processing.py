@@ -8,7 +8,6 @@ from typing import List
 import copy
 
 # cutstom imports
-from filterFunctions import butter_bandpass_filter
 from utils import convertDataFrameToNumpyArray
 from consts import *
 
@@ -66,29 +65,23 @@ class SlidingWindow(BaseEstimator, TransformerMixin):
         return channelNames
 
 
-class DeleteFaultyEpochs(BaseEstimator, TransformerMixin):
-    ''' Custom Transfomer
-    
-    Delete faulty epochs - A faulty epochs contains e.g. more than 12.5% NaN Values
+class Convert3dArrayToSeriesOfDataframes(BaseEstimator, TransformerMixin):
+    ''' Custom Transformer
 
-    Expects a 3D numpy.ndarray but returns a 3D List! Because we can not easily delete single elements in a 3D numpy.ndarray    
+    Convert a 3D numpy.ndarray to a series of dataframes. It basically just splits up the 3d into 1d and 2d
     '''
-    def __init__(self, maxFaultyRate = 0.15):
-        self.maxFaultyRate = maxFaultyRate
 
-    def fit(self, data_ndarray : np.ndarray, y=None):
+    def __init__(self):
+        pass
+
+    def fit(self, X , y=None):
         return self # nothing else to do
 
     def transform(self, data_ndarray : np.ndarray) -> pd.Series:
-        ''' Deletes all faulty data from the given array '''
-        print("Deleting faulty data...")
-
         # convert it to a series of dataframes
-        epochSeries = self.__convert3dArrayToSeriesOfDataframes(data_ndarray)
-        
-        # delete faulty epochs inplace
-        self.__deleteFaultyEpochs(epochSeries, maxFaultyRate=self.maxFaultyRate)
+        print("Converting 3d Numpy Array to a series of Df's")
 
+        epochSeries = self.__convert3dArrayToSeriesOfDataframes(data_ndarray)
         return epochSeries
 
     def __convert3dArrayToSeriesOfDataframes(self, d3Epochs : np.ndarray) -> pd.Series:
@@ -131,6 +124,28 @@ class DeleteFaultyEpochs(BaseEstimator, TransformerMixin):
             d3List.append(copy.deepcopy(channelEpochs))
         
         return d3List
+
+class DeleteFaultyEpochs(BaseEstimator, TransformerMixin):
+    ''' Custom Transfomer
+    
+    Delete faulty epochs - A faulty epochs contains e.g. more than 12.5% NaN Values
+
+    Expects a 3D numpy.ndarray but returns a 3D List! Because we can not easily delete single elements in a 3D numpy.ndarray    
+    '''
+    def __init__(self, maxFaultyRate = 0.15):
+        self.maxFaultyRate = maxFaultyRate
+
+    def fit(self, data_ndarray : np.ndarray, y=None):
+        return self # nothing else to do
+
+    def transform(self, epochSeries : pd.Series) -> pd.Series:
+        ''' Deletes all faulty data from the given array '''
+        print("Deleting faulty data...")
+        
+        # delete faulty epochs inplace
+        self.__deleteFaultyEpochs(epochSeries, maxFaultyRate=self.maxFaultyRate)
+
+        return epochSeries
 
     def __deleteFaultyEpochs(self, epochSeries : pd.Series, maxFaultyRate=0.15):
         ''' Deletes the faulty epochs from the given epochSeries
@@ -190,7 +205,7 @@ class NormalizeData(BaseEstimator, TransformerMixin):
     def __init__(self):
         pass
 
-    def fit(self, data_ndarray : np.ndarray, y=None):
+    def fit(self, X , y=None):
         return self # nothing else to do
 
     def transform(self, epochSeries : pd.Series) -> pd.Series:

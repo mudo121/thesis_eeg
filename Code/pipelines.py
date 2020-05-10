@@ -4,29 +4,41 @@ This file contains functinos where pipelines are defined. E.g. a pre-processing 
 '''
 
 import pandas as pd
-from typing import Dict
+from typing import Dict, List
 from sklearn.pipeline import Pipeline
 import os
 
 # Local imports
-from Transfomer_Signal import (ConvertIndexToTimestamp, ExtractSignals,
-                                BandpassFilter, BandstopFilter, ReplaceOutliers,
+from Transformers_Data_Converter import (ConvertIndexToTimestamp, ExtractSignals)
+
+from Transfomer_Signal import (BandpassFilter, BandstopFilter, ReplaceOutliers,
                                 CenterData, ResampleSignal)
 from Transformer_Pre_Processing import (SlidingWindow, NormalizeData, DeleteFaultyEpochs,
-                                            ReplaceNaNs)
+                                            ReplaceNaNs, Convert3dArrayToSeriesOfDataframes)
 from Transformer_Feature_Extraction import (Frequency_Features)
 from Measuring_Functions import (getChannelUsageInEpochSeries)
 from plotFunctions import (plotInteractiveEpochs, plotFeatureEpochs)
 from utils import readFileCSV
 
 
-def filter_signal(df : pd.DataFrame, config : Dict, starttime=None) -> pd.DataFrame:
+
+def convert_data(df : pd.DataFrame, config : Dict, starttime=None) -> (pd.DataFrame, List):
+    ''' Convert the Data into a more general format for further processing '''
+
+    # convert data pipeline - first pipeline
+    convert_data_pipeline = Pipeline([
+        ('Convert Index to Timestamp', ConvertIndexToTimestamp(device=config['deviceName'], starttime=starttime)),
+        ('Extract Signals', ExtractSignals(device=config['deviceName']))
+    ])
+    df, featureList = convert_data_pipeline.fit_transform(df)
+    return df, featureList
+
+
+def filter_signal(df : pd.DataFrame, config : Dict) -> pd.DataFrame:
     ''' Filter the signal with bandpass, bandstopp and repace outliers '''
 
-    # signal processing pipeline - the first pipeline - e.g. extract the signal from the raw .csv and filter it
+    # signal processing pipeline - e.g. extract the signal from the raw .csv and filter it
     signal_processing_pipeline = Pipeline([
-        ('Convert Index to Timestamp', ConvertIndexToTimestamp(device=config['deviceName'], starttime=starttime)),
-        ('Extract Signals', ExtractSignals(device=config['deviceName'])),
         ('Bandpass Filter', BandpassFilter(device=config['deviceName'], lowcufreq=config['lowcutFreq_bandpass'], highcutfreq=config['highcutFreq_bandpass'], samplingRate=config['samplingRate'])),
         ('Bandstop Filter', BandstopFilter(device=config['deviceName'], lowcufreq=config['lowcutFreq_bandstopp'], highcutfreq=config['highcutFreq_bandstopp'], samplingRate=config['samplingRate'])),
         ('Replace Outliers', ReplaceOutliers(device=config['deviceName'], lowerThreshold=config['lowerThreshold'], upperThreshold=config['upperThreshold']))
@@ -42,9 +54,10 @@ def pre_process_signal(df : pd.DataFrame, config : Dict) -> pd.Series:
     # pre-process the pipeline for machine learning
     pre_processing_pipeline = Pipeline([
         ('Create Epochs', SlidingWindow(samplingRate=config['samplingRate'], windowSizeInSeconds=config['epochWindowSize'], overlapInSeconds=config['overlap'])),
-        ('Delete Faulty Epochs', DeleteFaultyEpochs(maxFaultyRate=config['maxFaultyRate'])), # returns a numpy series with dataframes
+        ('Convert the 3d numpy array', Convert3dArrayToSeriesOfDataframes()),
+        #('Delete Faulty Epochs', DeleteFaultyEpochs(maxFaultyRate=config['maxFaultyRate'])),
+        ('Normalize Data', NormalizeData()),
         ('Replace NaNs with Zero', ReplaceNaNs()),
-        ('Normalize Data', NormalizeData())
     ])
 
     epochSeries = pre_processing_pipeline.fit_transform(df)
