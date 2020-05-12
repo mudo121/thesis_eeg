@@ -5,6 +5,7 @@ from typing import List
 import numpy as np
 from typing import List, Dict
 import yaml
+import io
 
 def readFileCSV(filePath : str) -> pd.DataFrame:
     ''' Loads a csv file and returns a pandas data frame '''
@@ -69,3 +70,48 @@ def filterDfByColumns(df : pd.DataFrame, columnsToKeep : List):
                 requiredChannelList.append(dfColumn)
         
     return df.filter(requiredChannelList)
+
+def saveFeatureListToFile(featureList : List, filepath : str):
+    ''' A list to the given file path - Used for saving feautres in a nice way for further processing'''
+    if type(featureList) is not list:
+        raise Exception("The given feature list is not a list!")
+    
+    print("Saving a feature list to: '{}'".format(filepath))
+    
+    f = open(filepath, "w")
+    for feature in featureList:
+        line = "{}\n".format(feature)
+        f.write(line)
+    f.close()
+
+
+def saveDictToFile(myDict, filepath : str):
+    ''' Save a dictionary the given file path'''
+    
+    print("Saving dict to {}".format(filepath))
+    f = open(filepath, "w")
+    for key, value in myDict.items():
+        line = "{v} {k}\n".format(v=value, k=key.upper())
+        f.write(str(line))
+    f.close()
+
+
+def loadTargetLabelsTxt(filePath : str) -> Dict:
+    ''' Load a target tables txt file into a dict'''
+    targetDict = {}
+    with io.open(filePath, "r", newline=None) as fd:
+        for line in fd:
+            line = line.split()
+            targetDict[line[1]] = line[0]
+    
+    return targetDict
+    
+    
+def loadFeaturesTxt(filePath : str) -> List:
+    ''' Load a features txt file into a list'''
+    featureList = []
+    with io.open(filePath, "r", newline=None) as fd:
+        for line in fd:
+            line = line.replace("\n", "")
+            featureList.append(line)
+    return featureList

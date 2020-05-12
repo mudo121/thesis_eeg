@@ -6,15 +6,294 @@ This file contains function which creates data, ready for machine learning
 import pandas as pd
 import numpy as np
 import os
-from typing import List
+from typing import List, Dict, Tuple
 
 # local imports
-from pipelines import (filter_signal, pre_process_signal, feature_extraction)
-from utils import readFileCSV, filterDfByColumns
-from Measuring_Functions import faultyFeaturesNames, countRecordsOfDf
-from consts import target_dict
+from myDecorators import deprecated
+
+#from myDecorators import deprecated
+
+from utils import readFileCSV, saveFeatureListToFile, loadConfigFile, saveDictToFile
+from pipelines import convert_data, filter_signal, pre_process_signal, feature_extraction
 
 
+def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.DataFrame, List[str]):
+    ''' Process a given filepath with the current pipelines 
+    
+    This creates two different data objects:
+        epochSeries: This is a panda.Series which contains dataframes. Each index at the series represens one epoch
+        frequencyFreatureDf: This is a dataframe of the frequency features of the epochSeries. The index represnts the epochs. The features are the columns
+    '''
+    if not os.path.isfile(filepath):
+        raise Exception("The file '{}' does not exists!".format(filepath))
+    
+    df = readFileCSV(filepath)
+    df, channelNameList =  convert_data(df=df, config=yamlConfig, starttime=None)
+    df = filter_signal(df=df, config=yamlConfig) # general filtering
+    epochSeries = pre_process_signal(df=df, config=yamlConfig)   # pre-processing
+    frequencyFeatureDf = feature_extraction(epochSeries=epochSeries, config=yamlConfig) # extract features
+    
+    return epochSeries, frequencyFeatureDf, channelNameList
+
+
+def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.DataFrame, List[str]):
+    ''' Process a given filepath with the current pipelines 
+    
+    This creates two different data objects:
+        epochSeries: This is a panda.Series which contains dataframes. Each index at the series represens one epoch
+        frequencyFreatureDf: This is a dataframe of the frequency features of the epochSeries. The index represnts the epochs. The features are the columns
+    '''
+    if not os.path.isfile(filepath):
+        raise Exception("The file '{}' does not exists!".format(filepath))
+    
+    df = readFileCSV(filepath)
+    df, channelNameList =  convert_data(df=df, config=yamlConfig, starttime=None)
+    df = filter_signal(df=df, config=yamlConfig) # general filtering
+    epochSeries = pre_process_signal(df=df, config=yamlConfig)   # pre-processing
+    frequencyFeatureDf = feature_extraction(epochSeries=epochSeries, config=yamlConfig) # extract features
+    
+    return epochSeries, frequencyFeatureDf, channelNameList
+
+
+def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : str, yamlConfig):
+    ''' Process the given rawfilePath and safe the result as pickle files
+    This function calls 'processRawFileWithPipeline()' and the two returning data objects will be safed
+    
+    @param str rawFilePath: path to file which gets process
+    @param str fileDir: Directory where the data objects should be stored
+    @param str label: A label to know which data we process, e.g. fatigue, normal or awake data
+    @param yamlConfig: A loaded yaml config file for processing the data
+    '''
+    print ("Starting to process {}...".format(rawFilePath))
+    # process the file
+    epochSeries, frequencyFeatureDf, channelNameList = processRawFileWithPipeline(filepath=rawFilePath, yamlConfig=yamlConfig)
+    
+    # save the epoch series
+    epochSeries.to_pickle(os.path.join(fileDir,'epochSeries_{}.pkl'.format(label)))
+    
+    # save the frequency df
+    frequencyFeatureDf.to_pickle(os.path.join(fileDir,'frequencyFeaturesDf_{}.pkl'.format(label)))
+    
+    # save the channel name list
+    saveFeatureListToFile(featureList=channelNameList,
+                          filepath=os.path.join(fileDir, "features_channel_names.txt"))
+    
+    # save frequency features
+    saveFeatureListToFile(featureList=list(frequencyFeatureDf.columns),
+                          filepath=os.path.join(fileDir, "features_frequency_df.txt"))
+
+
+def processRawDatasetToPickleFiles(datasetDirPath : str, device : str, awakeFileName : str,
+                                   fatigueFileName : str, normalFileName : str, unlabeledFileName : str):
+    '''
+    @param str datasetDirPath: Path where the directory of the dataset is
+    @param str device: name of the device, to load the correct yaml file for processing
+    
+    Depending on the dataset there might be awake, normal, fatigue or unlabeled data. 
+    @param awakeFileName: filename of the awake data or None then it will be ignored
+    @param fatigueFileName: filename of the fatigue data or None then it will be ignored
+    @param normalFileName: filename of the normal data or None then it will be ignored
+    @param unlabeledFileName: filename of the unlabeled data or None then it will be ignored
+    '''
+    
+    if not os.path.isdir(datasetDirPath):
+        raise Exception("The given dir path '{}' does not exist!".format(datasetDirPath))
+        
+    # Load the yaml config file for the processing
+    yamlConfig = loadConfigFile(device)
+    
+    for root, dirs, files in os.walk(datasetDirPath):
+        for subjectDir in dirs:
+            print("#############################################")
+            print("Process Subject {} Data...".format(subjectDir))
+            print("---------------------------------------------")
+            
+            if awakeFileName is not None: 
+                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, awakeFileName),
+                                                  fileDir=os.path.join(root, subjectDir),
+                                                  label = "awake",
+                                                  yamlConfig=yamlConfig)
+                
+            if fatigueFileName is not None: 
+                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, fatigueFileName),
+                                                  fileDir=os.path.join(root, subjectDir),
+                                                  label = "fatigue",
+                                                  yamlConfig=yamlConfig)
+                
+            if normalFileName is not None: 
+                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, normalFileName),
+                                                  fileDir=os.path.join(root, subjectDir),
+                                                  label = "normal",
+                                                  yamlConfig=yamlConfig)
+                
+            if unlabeledFileName is not None: 
+                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, normalFileName),
+                                                  fileDir=os.path.join(root, subjectDir),
+                                                  label = "unlabeled",
+                                                  yamlConfig=yamlConfig)
+    
+    print("#######################################")
+    print("Done processing and saving a complete Dataset!")
+
+
+def loadPickeldData(dataDir : str, label : str):
+    ''' Load the epochseries and frequency feature df
+    
+    @param str dataDir: Directory where the data is
+    @param str label: decide which 
+    '''
+    try:
+        epochSeries = pd.read_pickle(os.path.join(dataDir,'epochSeries_{}.pkl'.format(label)))
+    except Exception as e:
+        #print (e)
+        epochSeries = None
+        
+    try:
+        frequencyFeatureDf = pd.read_pickle(os.path.join(dataDir,'frequencyFeaturesDf_{}.pkl'.format(label)))
+    except Exception as e:
+        #print (e)
+        frequencyFeatureDf = None
+
+    return epochSeries, frequencyFeatureDf
+
+
+def loadPickeldDataset(datasetDirPath : str) -> Dict:
+    ''' This functions loads a complete dataset into a dict
+    
+    Each subject should have a folder with a number in that dict.
+    E.g. 1 for subject 1, 2 for subject 2, etc.
+    So the datasetDir has only folders with numbers for each subject
+
+    Each Subject contains a dict with 'awake', 'normal', 'fatigue' and 'unlabeled' entry.
+    Each entry contain the epochSeries and frequencyFeatureDf
+    '''
+    
+    if not os.path.isdir(datasetDirPath):
+        raise Exception("The given dir path '{}' does not exist!".format(datasetDirPath))
+    
+    datasetDict = {}
+    
+    for root, dirs, files in os.walk(datasetDirPath):
+        for subjectDir in dirs:
+            print("Load Subject {} Data...".format(subjectDir))
+            
+            epochSeries_awake, frequencyFeatureDf_awake = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                          label="awake")
+            
+            epochSeries_normal, frequencyFeatureDf_normal = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                          label="normal")
+            
+            epochSeries_fatigue, frequencyFeatureDf_fatigue = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                          label="fatigue")
+            
+            epochSeries_unlabeled, frequencyFeatureDf_unlabeled = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                          label="unlabeled")
+            
+            datasetDict[subjectDir] = {"awake" : (epochSeries_awake, frequencyFeatureDf_awake),
+                                       "normal" : (epochSeries_normal, frequencyFeatureDf_normal),
+                                       "fatigue" : (epochSeries_fatigue, frequencyFeatureDf_fatigue),
+                                       "unlabeled" : (epochSeries_unlabeled, frequencyFeatureDf_unlabeled)}
+    return datasetDict
+
+
+
+def createXyFromDataSeries(dataSeries : pd.Series, target : int) -> (np.ndarray, np.ndarray):
+    ''' Create X and y for machine learning
+    
+    @param pd.Series dataSeries: Should be a series of dataframes
+    
+    X should look like this [samples, timesteps, features]
+        samples: The epoch
+        timesteps: E.g. if the epoch contains 200 values then the timestep should contain 200 values
+        features: The actual value
+    
+    y should look tlike this [classIds] 
+        classIds: The label for the sample of the X Data
+    '''
+    
+    samples = []
+    targetArray = []
+    
+    if dataSeries is None:
+        raise TypeError("Data Series is None!")
+    
+    if type(dataSeries) != pd.Series:
+        raise Exception("The given dataSeries is not a pd.Series! It is {}".format(type(dataSeries)))
+    
+    # loop through the data Series
+    for df in dataSeries:
+        
+        if type(df) != pd.DataFrame: # check the type
+            raise Exception("The dataseries contains a {} object - The series should dataframes only!".format(type(df)))
+            
+        timesteps = []
+            
+        for index, row in df.iterrows():
+            features = row.to_numpy() # features
+            timesteps.append(features)
+        
+        samples.append(timesteps)
+        targetArray.append(target)
+    
+    
+    X = np.array(samples)
+    y = np.array(targetArray)
+    
+    return X, y
+
+
+def createMachineLearningDataset(eegDataset, targetLabelDict) -> (np.array, np.array):
+    
+    X = None
+    y = None
+    
+    for subject in eegDataset:
+        for target in targetLabelDict:
+            
+            try:
+                print("Processing Subject {} - Target: {} ...".format(subject, target))
+                eegDataset[subject][target][0]
+                tempX, tempy = createXyFromDataSeries(dataSeries = eegDataset[subject][target][0],
+                                       target = targetLabelDict[target])
+
+                if X is None:
+                    X = tempX
+                else:
+                    X = np.concatenate((X, tempX))
+
+                if y is None:
+                    y = tempy
+                else:
+                    y = np.concatenate((y, tempy))
+            
+            except TypeError:
+                print("Skipping Target: {}".format(target))
+    
+    print("Done!")
+    return X,y
+
+
+def createAndSafeMlDataset(eegDataset : Dict[str, Dict[str ,Tuple[pd.Series, pd.DataFrame]]], targetLabelDict : Dict,
+                           dirPath : str) -> (np.array, np.array):
+    
+    if not os.path.isdir(dirPath):
+        raise Exception("The given directory path is not valid! Given path: {}".format(dirPath))
+    
+    print("Creating Machine Learning Dataset!")
+    X, y = createMachineLearningDataset(eegDataset, targetLabelDict)
+    
+    #Todo - Build the feature df somehow into that too
+    
+    print("\nSaving Machine Learning Dataset into this directory: {}".format(dirPath))
+    np.save(os.path.join(dirPath, "data_series_X.npy"), X)
+    np.save(os.path.join(dirPath, "data_series_y.npy"), y)
+    
+    # Save target labels
+    saveDictToFile(targetLabelDict, filepath=os.path.join(dirPath,'target_labels.txt'))
+    
+    return X, y
+
+@deprecated("Rather use the other functions here to create a feature df")
 def generateFeatureDf(csvFilePath, starttime, yamlConfig, label : str, generateData : bool = True, mainDir : str = None) -> (pd.Series, pd.DataFrame):
     ''' Generates dataframes of given csv filepaths
     These dataframes are containg features of the eeg data.
@@ -57,138 +336,6 @@ def generateFeatureDf(csvFilePath, starttime, yamlConfig, label : str, generateD
     
     return (epochSeries, frequencyFeatureDf)
 
-
-def createDataAndTargetArray(awakeDf, non_awakeDf, unlabeledDf, channelsToUse = None, splitChannels = False, maxPercentageNanValues = 0.0):
-    '''  This functions creates a data and a target array which can be fed into classifiers
-    
-    The data array contains the data and the target array says what type of data it is e.g. awake or fatigue
-    The index of the data and target array meatches each other. This is what this functions achives
-    So the index 1 of the target array represents the index 1 at the data array. And so on. 
-
-    So far NaN values are getting replaced by 0 in this process!
-    
-    @param awakeDf: A dataframe which only contains awake data/features
-    @param non_awakeDf: A dataframe which only contains non awake data/features
-    @param unlabeledDf: A dataframe which only contains unlabeled data/features
-    @param channelsToUse: A list of which channels should be used | If none then use all channels
-    @param splitChannels: If True then seperate the data and target by the channels we want to use | If false, it returns a list with one data array and one target array
-    @param maxPercentageNanValues: Defines how many NaN Values are allowed to be NaN (in percentage!)
-    
-    @return ([dataArray], [targetArray])
-    '''
-    targetArray = []
-    dataDf = pd.DataFrame()
-    
-    print("Creating Data and Target Array...")
-    if channelsToUse is None:
-        print("Using all channels...")
-    else:
-        usedChannelString = "Using the channels: "
-        for channel in channelsToUse: usedChannelString += "{}, ".format(channel)
-        print(usedChannelString)
-            
-    # Filter all dataframes - If the DF or channel is None, nothing will happen
-    awakeDf = filterDfByColumns(awakeDf, channelsToUse)
-    non_awakeDf = filterDfByColumns(non_awakeDf, channelsToUse)
-    unlabeledDf = filterDfByColumns(unlabeledDf, channelsToUse)
-    
-    print ("Using Features where the NaN percentage is equal or lower than: {}".format(maxPercentageNanValues))
-    
-    
-    if awakeDf is not None:
-        
-        # Filter the features
-        awakeDf = awakeDf.drop(faultyFeaturesNames(awakeDf, maxPercentageMissing=maxPercentageNanValues), axis='columns')
-        
-        if not awakeDf.empty: # it is possible that the Df is now empty...
-            # TODO - Checken ob gut oder schlecht?!?!?
-            awakeDf = awakeDf.fillna(0)
-
-            startCounter = 0
-            if dataDf.empty:
-                # Do this because then it will copy also all columns, then we can append stuff
-                dataDf = awakeDf.loc[:1]
-
-                # append to awake into the target array
-                targetArray.append(target_dict['awake'])
-                targetArray.append(target_dict['awake'])
-                startCounter = 2
-
-            # We have to start at 2 if we added 0:1 already
-            for i in range(startCounter, len(awakeDf)):
-                dataDf = dataDf.append(awakeDf.loc[i], ignore_index=True)
-                targetArray.append(target_dict['awake'])
-
-            print("Awake DF Columns: {}".format(awakeDf.columns))
-
-
-            
-    if non_awakeDf is not None:
-        
-        # Filter the features
-        non_awakeDf = non_awakeDf.drop(faultyFeaturesNames(non_awakeDf, maxPercentageMissing=maxPercentageNanValues), axis='columns')
-        if not non_awakeDf.empty: # it is possible that the Df is now empty...
-        
-            # TODO - Checken ob gut oder schlecht?!?!?
-            non_awakeDf = non_awakeDf.fillna(0)
-            
-            startCounter = 0
-            if dataDf.empty:
-                # Do this because then it will copy also all columns, then we can append stuff
-                dataDf = non_awakeDf.loc[:1]
-
-                # append to awake into the target array
-                targetArray.append(target_dict['non-awake'])
-                targetArray.append(target_dict['non-awake'])
-                startCounter = 2
-
-            # We have to start at 2 if we added 0:1 already
-            for i in range(startCounter, len(non_awakeDf)):
-                dataDf = dataDf.append(non_awakeDf.loc[i], ignore_index=True)
-                targetArray.append(target_dict['non-awake'])
-
-            print("Non-Awake DF Columns: {}".format(non_awakeDf.columns))
-            
-            
-    if unlabeledDf is not None:
-        
-        # Filter the features
-        unlabeledDf = unlabeledDf.drop(faultyFeaturesNames(unlabeledDf, maxPercentageMissing=maxPercentageNanValues), axis='columns')
-        
-        if not unlabeledDf.empty: # it is possible that the Df is now empty...
-            # TODO - Checken ob gut oder schlecht?!?!?
-            unlabeledDf = unlabeledDf.fillna(0)
-
-            startCounter = 0
-            if dataDf.empty:
-                # Do this because then it will copy also all columns, then we can append stuff
-                dataDf = unlabeledDf.loc[:1]
-
-                # append to awake into the target array
-                targetArray.append(target_dict['unlabeled'])
-                targetArray.append(target_dict['unlabeled'])
-                startCounter = 2
-
-            # We have to start at 2 if we added 0:1 already
-            for i in range(startCounter, len(unlabeledDf)):
-                dataDf = dataDf.append(unlabeledDf.loc[i], ignore_index=True)
-                targetArray.append(target_dict['unlabeled'])
-
-            print("Unlabled DF Columns: {}".format(unlabeledDf.columns))
-
-    # Information about the Arrays
-    awakeRecords = countRecordsOfDf(awakeDf)
-    non_awakeRecords = countRecordsOfDf(non_awakeDf)
-    unlabeledRecords = countRecordsOfDf(unlabeledDf)
-    
-    print("""The Data/Target Array contains:
-    - {awake} awake data records
-    - {non_awake} non-awake data records
-    - {unlabeled} unlabeled data records""".format(awake = awakeRecords,
-                                                   non_awake = non_awakeRecords,
-                                                   unlabeled = unlabeledRecords))
-
-    return (dataDf.to_numpy(), np.array(targetArray))
 
 
 

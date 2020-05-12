@@ -21,7 +21,6 @@ from plotFunctions import (plotInteractiveEpochs, plotFeatureEpochs)
 from utils import readFileCSV
 
 
-
 def convert_data(df : pd.DataFrame, config : Dict, starttime=None) -> (pd.DataFrame, List):
     ''' Convert the Data into a more general format for further processing '''
 
