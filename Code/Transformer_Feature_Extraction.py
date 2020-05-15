@@ -107,6 +107,11 @@ class Frequency_Features(BaseEstimator, TransformerMixin):
         # make a nice df out of all and return it
         frequencyFeatureDf = self.__createNiceFeatureDf(statisticsBandpowerDict)
 
+
+        # fill nan's (nones) with 0.0
+        # TODO - maybe user interpolation here
+        frequencyFeatureDf.fillna(value=0.0, inplace=True)
+
         return frequencyFeatureDf
 
     def __convertDataFrameToNumpyArray(self, df : pd.DataFrame) -> np.ndarray:

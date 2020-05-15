@@ -7,10 +7,15 @@ SUPPORTED_DEVICES = [DEVICES_MUSE_MONITOR,
                      DEVICES_OPEN_BCI,
                      DEVICES_MUSE_LSL]
 
-TARGET_LABEL_DICT = {"NORMAL" : 0,
-                    "FATIGUE" : 1,
-                    "AWAKE" : 2,
-                    "UNLABELED" : 3}
+TARGET_AWAKE = "AWAKE"
+TARGET_FATIGUE = "FATIGUE"
+TARGET_NORMAL = "NORMAL"
+TARGET_UNLABELED = "UNLABELED"
+
+TARGET_LABEL_DICT = {TARGET_AWAKE : 0,
+                    TARGET_FATIGUE : 1,
+                    TARGET_NORMAL : 2,
+                    TARGET_UNLABELED : 3}
 
 
 INDEX_BANDPOWER_LIST = 'bandpower_list'

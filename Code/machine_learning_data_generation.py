@@ -7,14 +7,15 @@ import pandas as pd
 import numpy as np
 import os
 from typing import List, Dict, Tuple
+from sklearn.model_selection import train_test_split
+from keras.utils import to_categorical
+
 
 # local imports
 from myDecorators import deprecated
-
-#from myDecorators import deprecated
-
 from utils import readFileCSV, saveFeatureListToFile, loadConfigFile, saveDictToFile
 from pipelines import convert_data, filter_signal, pre_process_signal, feature_extraction
+from consts import TARGET_AWAKE, TARGET_FATIGUE, TARGET_NORMAL, TARGET_UNLABELED
 
 
 def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.DataFrame, List[str]):
@@ -143,13 +144,13 @@ def loadPickeldData(dataDir : str, label : str):
     @param str label: decide which 
     '''
     try:
-        epochSeries = pd.read_pickle(os.path.join(dataDir,'epochSeries_{}.pkl'.format(label)))
+        epochSeries = pd.read_pickle(os.path.join(dataDir,'epochSeries_{}.pkl'.format(label.lower())))
     except Exception as e:
         #print (e)
         epochSeries = None
         
     try:
-        frequencyFeatureDf = pd.read_pickle(os.path.join(dataDir,'frequencyFeaturesDf_{}.pkl'.format(label)))
+        frequencyFeatureDf = pd.read_pickle(os.path.join(dataDir,'frequencyFeaturesDf_{}.pkl'.format(label.lower())))
     except Exception as e:
         #print (e)
         frequencyFeatureDf = None
@@ -178,21 +179,21 @@ def loadPickeldDataset(datasetDirPath : str) -> Dict:
             print("Load Subject {} Data...".format(subjectDir))
             
             epochSeries_awake, frequencyFeatureDf_awake = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label="awake")
+                                                                          label=TARGET_AWAKE)
             
             epochSeries_normal, frequencyFeatureDf_normal = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label="normal")
+                                                                          label=TARGET_NORMAL)
             
             epochSeries_fatigue, frequencyFeatureDf_fatigue = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label="fatigue")
+                                                                          label=TARGET_FATIGUE)
             
             epochSeries_unlabeled, frequencyFeatureDf_unlabeled = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label="unlabeled")
+                                                                          label=TARGET_UNLABELED)
             
-            datasetDict[subjectDir] = {"awake" : (epochSeries_awake, frequencyFeatureDf_awake),
-                                       "normal" : (epochSeries_normal, frequencyFeatureDf_normal),
-                                       "fatigue" : (epochSeries_fatigue, frequencyFeatureDf_fatigue),
-                                       "unlabeled" : (epochSeries_unlabeled, frequencyFeatureDf_unlabeled)}
+            datasetDict[subjectDir] = {TARGET_AWAKE : (epochSeries_awake, frequencyFeatureDf_awake),
+                                       TARGET_NORMAL : (epochSeries_normal, frequencyFeatureDf_normal),
+                                       TARGET_FATIGUE : (epochSeries_fatigue, frequencyFeatureDf_fatigue),
+                                       TARGET_UNLABELED : (epochSeries_unlabeled, frequencyFeatureDf_unlabeled)}
     return datasetDict
 
 
@@ -203,8 +204,8 @@ def createXyFromDataSeries(dataSeries : pd.Series, target : int) -> (np.ndarray,
     @param pd.Series dataSeries: Should be a series of dataframes
     
     X should look like this [samples, timesteps, features]
-        samples: The epoch
-        timesteps: E.g. if the epoch contains 200 values then the timestep should contain 200 values
+        epochs: the epoch
+        samples: Number of samples in the epoch - E.g. if the epoch contains 200 values then the timestep should contain 200 values
         features: The actual value
     
     y should look tlike this [classIds] 
@@ -241,57 +242,103 @@ def createXyFromDataSeries(dataSeries : pd.Series, target : int) -> (np.ndarray,
     
     return X, y
 
-
-def createMachineLearningDataset(eegDataset, targetLabelDict) -> (np.array, np.array):
+def createXyFromFrequencyDf(freqDf : pd.DataFrame, target : int) -> (np.ndarray, np.ndarray):
+    ''' Create X and y for machine learning from the frequency df
     
-    X = None
-    y = None
+    @param pd.DataFrame freqDf: A dataframe containing all the features from the frequency level
+    @param int target: The target of the dataframe, e.g. 0 or 1 which could correspond to fatigue or normal
+    
+    X should look like this [samples, timesteps, features]
+        samples: The epoch
+        timesteps: Only 1 timestep in this case - E.g. if the epoch contains 200 values then the timestep should contain 200 values
+        features: The actual value
+    
+    y should look tlike this [classIds] 
+        classIds: The label for the sample of the X Data
+    '''
+    
+    X = freqDf.to_numpy() # returns a 2D np.array! E.g. 60 epochs with 1200 features
+    
+    # Make the array 3D Array -to e.g. 60 epochs, 1 timestep and 1200 features
+    X = X.reshape(X.shape[0], 1, X.shape[1])
+    
+    y = [target] * X.shape[0]
+    y = np.array(y)
+    
+    return X, y
+
+def createMachineLearningDataset(eegDataset : Dict, targetLabelDict : Dict) -> (((np.array, np.array)),(np.array, np.array)):
+    ''' This functions creates from a loaded pickel dataset X and y data for the eeg data and frequency feature data
+    
+    The functions returns X_eegData, y_eegData and X_frequncyFeatures, y_frequencyFeatures
+    Both X's are 3D numpy arrays, where:
+        1D: epoch
+        2D: samples - number of samples in the epoch
+        3D: features - the actual value
+    '''
+    X_eeg_series = None
+    y_eeg_series = None
+    
+    X_frequency_features = None
+    y_frequency_features = None
     
     for subject in eegDataset:
         for target in targetLabelDict:
             
             try:
                 print("Processing Subject {} - Target: {} ...".format(subject, target))
-                eegDataset[subject][target][0]
-                tempX, tempy = createXyFromDataSeries(dataSeries = eegDataset[subject][target][0],
-                                       target = targetLabelDict[target])
-
-                if X is None:
-                    X = tempX
-                else:
-                    X = np.concatenate((X, tempX))
-
-                if y is None:
-                    y = tempy
-                else:
-                    y = np.concatenate((y, tempy))
+                
+                # Create X,y for the eeg series
+                tempX_eeg, tempy_eeg = createXyFromDataSeries(dataSeries = eegDataset[subject][target][0],
+                                                              target = targetLabelDict[target])
+                
+                try:
+                    X_eeg_series = np.concatenate((X_eeg_series, tempX_eeg))
+                    y_eeg_series = np.concatenate((y_eeg_series, tempy_eeg))
+                except ValueError: # happens the first, when the init value is none
+                    X_eeg_series = tempX_eeg
+                    y_eeg_series = tempy_eeg
+                
+                # Create X,y for the frequency features
+                tempX_freq, tempy_freq = createXyFromFrequencyDf(freqDf = eegDataset[subject][target][1],
+                                                                target = targetLabelDict[target])
+                
+                try:
+                    X_frequency_features = np.concatenate((X_frequency_features, tempX_freq))
+                    y_frequency_features = np.concatenate((y_frequency_features, tempy_freq))
+                except ValueError: # happens the first, when the init value is none
+                    X_frequency_features = tempX_freq
+                    y_frequency_features = tempy_freq
+                    
             
             except TypeError:
                 print("Skipping Target: {}".format(target))
     
     print("Done!")
-    return X,y
-
+    return ((X_eeg_series, y_eeg_series), (X_frequency_features, y_frequency_features))
 
 def createAndSafeMlDataset(eegDataset : Dict[str, Dict[str ,Tuple[pd.Series, pd.DataFrame]]], targetLabelDict : Dict,
-                           dirPath : str) -> (np.array, np.array):
+                           dirPath : str) ->  ((np.array, np.array), (np.array, np.array)):
     
     if not os.path.isdir(dirPath):
         raise Exception("The given directory path is not valid! Given path: {}".format(dirPath))
     
     print("Creating Machine Learning Dataset!")
-    X, y = createMachineLearningDataset(eegDataset, targetLabelDict)
+    eegData, frequencyData = createMachineLearningDataset(eegDataset, targetLabelDict)
     
     #Todo - Build the feature df somehow into that too
     
     print("\nSaving Machine Learning Dataset into this directory: {}".format(dirPath))
-    np.save(os.path.join(dirPath, "data_series_X.npy"), X)
-    np.save(os.path.join(dirPath, "data_series_y.npy"), y)
+    np.save(os.path.join(dirPath, "X_eegData.npy"), eegData[0]) # X_eegData
+    np.save(os.path.join(dirPath, "y_eegData.npy"), eegData[1]) # y_eegData
+
+    np.save(os.path.join(dirPath, "X_frequencyData.npy"), frequencyData[0]) # X_frequencyData
+    np.save(os.path.join(dirPath, "y_frequencyData.npy"), frequencyData[1]) # y_frequencyData
     
     # Save target labels
     saveDictToFile(targetLabelDict, filepath=os.path.join(dirPath,'target_labels.txt'))
     
-    return X, y
+    return eegData, frequencyData
 
 @deprecated("Rather use the other functions here to create a feature df")
 def generateFeatureDf(csvFilePath, starttime, yamlConfig, label : str, generateData : bool = True, mainDir : str = None) -> (pd.Series, pd.DataFrame):
@@ -338,5 +385,50 @@ def generateFeatureDf(csvFilePath, starttime, yamlConfig, label : str, generateD
 
 
 
+def loadOnlineEEGdata(splitData=True, test_size=0.3, shuffle=False, ) -> ((), ()):
+    dirPath = "D:/Masterthesis/EEG_Data/eeg_data_online"
+    
+    print("Loading Online EEG Data from {} ...".format(dirPath))
+    
+    # load array
+    X_eeg = np.load(os.path.join(dirPath, 'X_eegData.npy'))
+    y_eeg = np.load(os.path.join(dirPath, 'y_eegData.npy'))
+    
+    X_freq = np.load(os.path.join(dirPath, 'X_frequencyData.npy'), allow_pickle=True)
+    y_freq = np.load(os.path.join(dirPath, 'y_frequencyData.npy'))
+    
+    # load target labels
+    
+    # load feature names
+    
+    if splitData:
+        # Split dataset into training set and test set
+        # EEG Data
+        X_eeg_train, X_eeg_test, y_eeg_train, y_eeg_test = train_test_split(X_eeg, y_eeg, test_size=test_size, shuffle=shuffle) # 70% training and 30% test    
+        #y_eeg_train = to_categorical(y_eeg_train)
+        #y_eeg_test = to_categorical(y_eeg_test)
+        eegData = (X_eeg_train, y_eeg_train, X_eeg_test, y_eeg_test)
+        print("EEG Data Shape:")
+        print(X_eeg_train.shape, y_eeg_train.shape, X_eeg_test.shape, y_eeg_test.shape)
+        
+        # Frequency Data
+        X_freq_train, X_freq_test, y_freq_train, y_freq_test = train_test_split(X_freq, y_freq, test_size=test_size, shuffle=shuffle) # 70% training and 30% test    
+        #y_freq_train = to_categorical(y_freq_train)
+        #y_freq_test = to_categorical(y_freq_test)
+        freqData = (X_freq_train, y_freq_train, X_freq_test, y_freq_test)
+        print("Freq Data Shape:")
+        print(X_freq_train.shape, y_freq_train.shape, X_freq_test.shape, y_freq_test.shape)
+    else:
+        print("Data does not get splitted into train and test!")
+        
+        print("EEG Data Shape:")
+        print(X_eeg.shape, y_eeg.shape)
+        
+        print("Freq Data Shape:")
+        print(X_freq.shape, y_freq.shape)
 
+        eegData = (X_eeg, y_eeg)
+        freqData = (X_freq, y_freq)
+    
+    return (eegData, freqData)
 
