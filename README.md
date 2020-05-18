@@ -1,6 +1,6 @@
 # Fatigue detection from driving persons with EEG - Masterthesis by Raphael Eißler
 
-To use the Code and Notebooks used Anaconda and create an enviorment from the [environment.yaml](environment.yml) in this Repo
+To use the Code and Notebooks used Anaconda and create an enviorment from the [environment.yaml](environment.yml) in this Repo. (This containts a lot though, the main packages would be Python 3.7, Jupyter Lab, Keras, Numpy, Scikit-learn)
 
 ### Code Folder
 This folder contains everything related to the own programmed Pipeline. It contains of transformers, utility functions, plot functions, measering functions and functions to load/save/create Data.
