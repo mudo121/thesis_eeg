@@ -385,9 +385,12 @@ def generateFeatureDf(csvFilePath, starttime, yamlConfig, label : str, generateD
 
 
 
-def loadOnlineEEGdata(splitData=True, test_size=0.3, shuffle=False, ) -> ((), ()):
-    dirPath = "D:/Masterthesis/EEG_Data/eeg_data_online"
+def loadOnlineEEGdata(dirPath="D:/Masterthesis/EEG_Data/eeg_data_online", splitData=True, test_size=0.3, shuffle=False, ) -> ((), ()):
     
+    if not os.path.isdir(dirPath):
+        print("Could not find '{}' - update the 'dirPath' param".format(dirPath))
+        return
+
     print("Loading Online EEG Data from {} ...".format(dirPath))
     
     # load array
