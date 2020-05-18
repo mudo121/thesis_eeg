@@ -3,7 +3,7 @@
 ## Getting Started
 - Prepare Workspace
   - Install [Anaconda](https://www.anaconda.com/products/individual)
-  - Create enviorment from file: `conda env create -f environment.yml` (use this [environment.yaml](environment.yml))
+  - Create enviorment from file: `conda env create -f environment.yml` (use this [environment.yaml](environment.yml)) (Does'nt work for now...)
   - Install the conda enviorment into jupyter: `python -m ipykernel install --user --name myenv --display-name "Python (myenv)"` (more infos [here](https://ipython.readthedocs.io/en/stable/install/kernel_install.html))
 - Clone this Repo on to your pc - (Optionally use the GitHub Software)
 - Download the EEG Data from [here](https://1drv.ms/u/s!AuIx_mQRobFA1g8FMEXZBfbdnIgg?e=nMWSxN)
