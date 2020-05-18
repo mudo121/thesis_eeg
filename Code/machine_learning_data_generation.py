@@ -388,8 +388,7 @@ def generateFeatureDf(csvFilePath, starttime, yamlConfig, label : str, generateD
 def loadOnlineEEGdata(dirPath="D:/Masterthesis/EEG_Data/eeg_data_online", splitData=True, test_size=0.3, shuffle=False, ) -> ((), ()):
     
     if not os.path.isdir(dirPath):
-        print("Could not find '{}' - update the 'dirPath' param".format(dirPath))
-        return
+        raise Exception("Could not find '{}' - update the 'dirPath' param and say me where the directory of the eeg data is".format(dirPath))
 
     print("Loading Online EEG Data from {} ...".format(dirPath))
     
