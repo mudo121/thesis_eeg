@@ -1,6 +1,43 @@
 # Fatigue detection from driving persons with EEG - Masterthesis by Raphael Eißler
 
-To use the Code and Notebooks used Anaconda and create an enviorment from the [environment.yaml](environment.yml) in this Repo. (This containts a lot though, the main packages would be Python 3.7, Jupyter Lab, Keras, Numpy, Scikit-learn)
+## Getting Started
+- Prepare Workspace
+  - Install [Anaconda](https://www.anaconda.com/products/individual)
+  - Create enviorment from file: `conda env create -f environment.yml` (use this [environment.yaml](environment.yml))
+  - Install the conda enviorment into jupyter: `python -m ipykernel install --user --name myenv --display-name "Python (myenv)"` (more infos [here](https://ipython.readthedocs.io/en/stable/install/kernel_install.html))
+- Clone this Repo on to your pc - (Optionally use the GitHub Software)
+- Download the EEG Data from [here](https://1drv.ms/u/s!AuIx_mQRobFA1g8FMEXZBfbdnIgg?e=nMWSxN)
+- Start Coding
+  - Open a anconda powershell
+  - Activate your enviorment: `conda activate yourEnv`
+  - Change Directory where you want to start jupyter lab: `cd /path/to/dir`
+  - Start Jupyter Lab: `jupyter lab`
+  - Create your own Notebook for Coding
+  
+## Notebook Basics
+Simple Functions you need to know or are nice to have
+
+### Local Imports
+With this code you can locally import other functions
+```
+# to enable local imports
+module_path = os.path.abspath('../code')
+print(module_path)
+if module_path not in sys.path:
+    sys.path.append(module_path)
+```
+
+### Load the online EEG Data
+With this function you can load the online EEG Data for Machine Learning
+```
+eegData, freqData = loadOnlineEEGdata(splitData=False)
+eegX, eegy = eegData
+freqX, freqy = freqData
+```
+This functions has 3 Parameters:
+- splitData (bool): True -> Splits the Data already in Train and Test Data
+- test_size (float): 0.3 -> If splitData is true then 30% of the data will be test data
+- shuffle (bool): If True, it will shuffle the data
 
 ### Code Folder
 This folder contains everything related to the own programmed Pipeline. It contains of transformers, utility functions, plot functions, measering functions and functions to load/save/create Data.
