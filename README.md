@@ -14,11 +14,6 @@
   - Start Jupyter Lab: `jupyter lab`
   - Create your own Notebook for Coding
  
-## Possible Code Improvements
-- Outlier detection could be improved. So far it is only a simple threshold function
-- Extract more Features (e.g. easily Entropy Features with the function from [here](https://github.com/forrestbao/pyeeg/blob/master/pyeeg/entropy.py)
-- Improve the prepare_signal Pipeline. Because of the SlidingWindow Transformer (based on [yasa](https://github.com/raphaelvallat/yasa) the result is a 3D-numpy Array. However when I started, I used to do everything with panda Dataframes. Therefore the Reuslt is getting now converted into a series of Dataframes (which takes quite long). The following steps in this pipeline may could be done as well if the Data is always a 3-D Numpy Array. This would require a lot a coding, but could improve the speed a lot (because this pipeline is a bit time consuming).
-
 ## Current Bugs
 - The 'delete faulty epochs' in the function `prepare_Signal` is not working currently. Somehow this produces too many NaN Values afterwards. Most of the frequency features are getting NaN's even though I replace all NaN's with zeroes...
 
