@@ -14,7 +14,7 @@
   - Start Jupyter Lab: `jupyter lab`
   - Create your own Notebook for Coding
  
-## Code Improvements
+## Possible Code Improvements
 - Outlier detection could be improved. So far it is only a simple threshold function
 
 ## Current Bugs
