@@ -1,0 +1,79 @@
+Date : 2020-05-20 21:37:26
+Directory : d:\Masterthesis\thesis_eeg
+Total : 43 files,  22858 codes, 221 comments, 696 blanks, all 23775 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| Jupyter            |         20 |     20,722 |          0 |         20 |     20,742 |
+| Python             |         15 |      1,418 |        201 |        638 |      2,257 |
+| YAML               |          5 |        640 |         20 |         28 |        688 |
+| Markdown           |          1 |         59 |          0 |         10 |         69 |
+| JSON with Comments |          1 |         18 |          0 |          0 |         18 |
+| JSON               |          1 |          1 |          0 |          0 |          1 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                      | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                         |         43 |     22,858 |        221 |        696 |     23,775 |
+| .ipynb_checkpoints                                                                                        |          5 |      5,820 |          0 |          5 |      5,825 |
+| Code                                                                                                      |         15 |      1,418 |        201 |        638 |      2,257 |
+| config                                                                                                    |          4 |        103 |         20 |         28 |        151 |
+| machine_learning_notebooks                                                                                |          8 |      2,905 |          0 |          8 |      2,913 |
+| machine_learning_notebooks\.ipynb_checkpoints                                                             |          4 |      1,442 |          0 |          4 |      1,446 |
+| projectkado                                                                                               |          2 |        364 |          0 |          2 |        366 |
+| projectkado\.ipynb_checkpoints                                                                            |          1 |        182 |          0 |          1 |        183 |
++-----------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                  | language           | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\Masterthesis\thesis_eeg\.ipynb_checkpoints\main_notebook-checkpoint.ipynb                              | Jupyter            |      1,983 |          0 |          1 |      1,984 |
+| d:\Masterthesis\thesis_eeg\.ipynb_checkpoints\processRawDataset-checkpoint.ipynb                          | Jupyter            |        447 |          0 |          1 |        448 |
+| d:\Masterthesis\thesis_eeg\.ipynb_checkpoints\testMuse-checkpoint.ipynb                                   | Jupyter            |      1,335 |          0 |          1 |      1,336 |
+| d:\Masterthesis\thesis_eeg\.ipynb_checkpoints\test_online_eeg_data-checkpoint.ipynb                       | Jupyter            |        765 |          0 |          1 |        766 |
+| d:\Masterthesis\thesis_eeg\.ipynb_checkpoints\test_pipeline-checkpoint.ipynb                              | Jupyter            |      1,290 |          0 |          1 |      1,291 |
+| d:\Masterthesis\thesis_eeg\Code\Measuring_Functions.py                                                    | Python             |         86 |          3 |         28 |        117 |
+| d:\Masterthesis\thesis_eeg\Code\Transfomer_Signal.py                                                      | Python             |         91 |          8 |         52 |        151 |
+| d:\Masterthesis\thesis_eeg\Code\Transformer_Feature_Extraction.py                                         | Python             |        251 |         49 |        127 |        427 |
+| d:\Masterthesis\thesis_eeg\Code\Transformer_Pre_Processing.py                                             | Python             |        154 |         18 |         73 |        245 |
+| d:\Masterthesis\thesis_eeg\Code\Transformers_Data_Converter.py                                            | Python             |         84 |         16 |         40 |        140 |
+| d:\Masterthesis\thesis_eeg\Code\__init__.py                                                               | Python             |          1 |          0 |          0 |          1 |
+| d:\Masterthesis\thesis_eeg\Code\consts.py                                                                 | Python             |         26 |          1 |          9 |         36 |
+| d:\Masterthesis\thesis_eeg\Code\data.py                                                                   | Python             |         18 |          1 |          7 |         26 |
+| d:\Masterthesis\thesis_eeg\Code\filterFunctions.py                                                        | Python             |         11 |          2 |          3 |         16 |
+| d:\Masterthesis\thesis_eeg\Code\machine_learning_data_generation.py                                       | Python             |        282 |         36 |        119 |        437 |
+| d:\Masterthesis\thesis_eeg\Code\main.py                                                                   | Python             |        122 |         26 |         61 |        209 |
+| d:\Masterthesis\thesis_eeg\Code\myDecorators.py                                                           | Python             |         45 |         22 |         18 |         85 |
+| d:\Masterthesis\thesis_eeg\Code\pipelines.py                                                              | Python             |         55 |          6 |         19 |         80 |
+| d:\Masterthesis\thesis_eeg\Code\plotFunctions.py                                                          | Python             |        101 |         12 |         56 |        169 |
+| d:\Masterthesis\thesis_eeg\Code\utils.py                                                                  | Python             |         91 |          1 |         26 |        118 |
+| d:\Masterthesis\thesis_eeg\README.md                                                                      | Markdown           |         59 |          0 |         10 |         69 |
+| d:\Masterthesis\thesis_eeg\config\muse_lsl.yaml                                                           | YAML               |         31 |          6 |          9 |         46 |
+| d:\Masterthesis\thesis_eeg\config\muse_monitor.yaml                                                       | YAML               |         10 |          1 |          2 |         13 |
+| d:\Masterthesis\thesis_eeg\config\neuroscan.yaml                                                          | YAML               |         31 |          7 |          8 |         46 |
+| d:\Masterthesis\thesis_eeg\config\openBci.yaml                                                            | YAML               |         31 |          6 |          9 |         46 |
+| d:\Masterthesis\thesis_eeg\dict.json                                                                      | JSON               |          1 |          0 |          0 |          1 |
+| d:\Masterthesis\thesis_eeg\environment.yml                                                                | YAML               |        537 |          0 |          0 |        537 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\.ipynb_checkpoints\knn-checkpoint.ipynb             | Jupyter            |        219 |          0 |          1 |        220 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\.ipynb_checkpoints\lstm-checkpoint.ipynb            | Jupyter            |        292 |          0 |          1 |        293 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\.ipynb_checkpoints\semi_supervised-checkpoint.ipynb | Jupyter            |        645 |          0 |          1 |        646 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\.ipynb_checkpoints\svm-checkpoint.ipynb             | Jupyter            |        286 |          0 |          1 |        287 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\knn.ipynb                                           | Jupyter            |        239 |          0 |          1 |        240 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\lstm.ipynb                                          | Jupyter            |        318 |          0 |          1 |        319 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\semi_supervised.ipynb                               | Jupyter            |        640 |          0 |          1 |        641 |
+| d:\Masterthesis\thesis_eeg\machine_learning_notebooks\svm.ipynb                                           | Jupyter            |        266 |          0 |          1 |        267 |
+| d:\Masterthesis\thesis_eeg\main_notebook.ipynb                                                            | Jupyter            |      1,983 |          0 |          1 |      1,984 |
+| d:\Masterthesis\thesis_eeg\processRawDataset.ipynb                                                        | Jupyter            |        315 |          0 |          1 |        316 |
+| d:\Masterthesis\thesis_eeg\projectkado\.ipynb_checkpoints\svm-checkpoint.ipynb                            | Jupyter            |        182 |          0 |          1 |        183 |
+| d:\Masterthesis\thesis_eeg\projectkado\svm.ipynb                                                          | Jupyter            |        182 |          0 |          1 |        183 |
+| d:\Masterthesis\thesis_eeg\testMuse.ipynb                                                                 | Jupyter            |      1,318 |          0 |          1 |      1,319 |
+| d:\Masterthesis\thesis_eeg\test_online_eeg_data.ipynb                                                     | Jupyter            |      4,182 |          0 |          1 |      4,183 |
+| d:\Masterthesis\thesis_eeg\test_pipeline.ipynb                                                            | Jupyter            |      3,835 |          0 |          1 |      3,836 |
+| d:\Masterthesis\thesis_eeg\thesis_workspace.code-workspace                                                | JSON with Comments |         18 |          0 |          0 |         18 |
+| Total                                                                                                     |                    |     22,858 |        221 |        696 |     23,775 |
++-----------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -137,6 +137,8 @@ def plot_magnitudeFreq_and_PSD(data, samplingRate, signalName):
     fig.tight_layout()
     plt.show()
 
+    return plt
+
 
 def plot_feature(feature_df, featureName = None, frequencyBand = None, channel = None):
     '''

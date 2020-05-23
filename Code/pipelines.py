@@ -45,7 +45,7 @@ def filter_signal(df : pd.DataFrame, config : Dict) -> pd.DataFrame:
     df = signal_processing_pipeline.fit_transform(df)
     return df
 
-def pre_process_signal(df : pd.DataFrame, config : Dict) -> pd.Series:
+def prepare_signal(df : pd.DataFrame, config : Dict) -> pd.Series:
     ''' Pre-process the signal by creating epochs, delete faulty epochs and normalize it
     
     Returns a series of dataframes
@@ -53,8 +53,8 @@ def pre_process_signal(df : pd.DataFrame, config : Dict) -> pd.Series:
     # pre-process the pipeline for machine learning
     pre_processing_pipeline = Pipeline([
         ('Create Epochs', SlidingWindow(samplingRate=config['samplingRate'], windowSizeInSeconds=config['epochWindowSize'], overlapInSeconds=config['overlap'])),
-        ('Convert the 3d numpy array', Convert3dArrayToSeriesOfDataframes()),
-        #('Delete Faulty Epochs', DeleteFaultyEpochs(maxFaultyRate=config['maxFaultyRate'])),
+        ('Convert the 3d numpy array', Convert3dArrayToSeriesOfDataframes()), # The pipeline was firstly written for panda dataframes that's why we convert it to a panda series of dataframes
+        #('Delete Faulty Epochs', DeleteFaultyEpochs(maxFaultyRate=config['maxFaultyRate'])), # Causes some bugs currently
         ('Normalize Data', NormalizeData()),
         ('Replace NaNs with Zero', ReplaceNaNs()),
     ])

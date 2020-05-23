@@ -14,7 +14,7 @@ from keras.utils import to_categorical
 # local imports
 from myDecorators import deprecated
 from utils import readFileCSV, saveFeatureListToFile, loadConfigFile, saveDictToFile
-from pipelines import convert_data, filter_signal, pre_process_signal, feature_extraction
+from pipelines import convert_data, filter_signal, prepare_signal, feature_extraction
 from consts import TARGET_AWAKE, TARGET_FATIGUE, TARGET_NORMAL, TARGET_UNLABELED
 
 
@@ -31,7 +31,7 @@ def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.Dat
     df = readFileCSV(filepath)
     df, channelNameList =  convert_data(df=df, config=yamlConfig, starttime=None)
     df = filter_signal(df=df, config=yamlConfig) # general filtering
-    epochSeries = pre_process_signal(df=df, config=yamlConfig)   # pre-processing
+    epochSeries = prepare_signal(df=df, config=yamlConfig)   # pre-processing
     frequencyFeatureDf = feature_extraction(epochSeries=epochSeries, config=yamlConfig) # extract features
     
     return epochSeries, frequencyFeatureDf, channelNameList
