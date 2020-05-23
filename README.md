@@ -16,6 +16,7 @@
  
 ## Possible Code Improvements
 - Outlier detection could be improved. So far it is only a simple threshold function
+- Extract more Features (e.g. easily Entropy Features with the function from [here](https://github.com/forrestbao/pyeeg/blob/master/pyeeg/entropy.py)
 
 ## Current Bugs
 - The 'delete faulty epochs' in the function `prepare_Signal` is not working currently. Somehow this produces too many NaN Values afterwards. Most of the frequency features are getting NaN's even though I replace all NaN's with zeroes...
