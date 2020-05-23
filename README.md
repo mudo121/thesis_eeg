@@ -13,9 +13,6 @@
   - Change Directory where you want to start jupyter lab: `cd /path/to/dir`
   - Start Jupyter Lab: `jupyter lab`
   - Create your own Notebook for Coding
- 
-## Current Bugs
-- The 'delete faulty epochs' in the function `prepare_Signal` is not working currently. Somehow this produces too many NaN Values afterwards. Most of the frequency features are getting NaN's even though I replace all NaN's with zeroes...
 
 
 ## Notebook Basics
