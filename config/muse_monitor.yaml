@@ -1,0 +1,13 @@
+---
+  deviceName: "muse_monitor"
+  samplingRate: 256 # Hz
+  lowcutFreq: 0.1 # Hz
+  highcutFreq: 60 # Hz
+
+  # replace outliers
+  upperThreshold: 200 
+  lowerThreshold: -200
+
+  maxFaultyRate: 0.15 # Lower -> more better quality epochs | Higher -> more noisy epochs
+  epochWindowSize: 2 # in seconds 
+  overlap: 1 # in seconds - or insert None for no overlap
