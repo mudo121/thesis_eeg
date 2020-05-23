@@ -1,5 +1,7 @@
 # Fatigue detection from driving persons with EEG - Masterthesis by Raphael Eißler
 
+## Check the Wiki fore more Infos!!
+
 ## Getting Started
 - Prepare Workspace
   - Install [Anaconda](https://www.anaconda.com/products/individual)
@@ -14,36 +16,6 @@
   - Start Jupyter Lab: `jupyter lab`
   - Create your own Notebook for Coding
 
-
-## Notebook Basics
-### Local Imports
-With this code you can locally import other functions
-```
-# to enable local imports
-module_path = os.path.abspath('../code')
-print(module_path)
-if module_path not in sys.path:
-    sys.path.append(module_path)
-```
-
-### Load the online EEG Data
-With this function you can load the online EEG Data for Machine Learning
-```
-eegData, freqData = loadOnlineEEGdata(splitData=False)
-eegX, eegy = eegData
-freqX, freqy = freqData
-```
-or
-```
-eegData, freqData = loadOnlineEEGdata(splitData=True)
-eegX_train, eegy_train, eegX_test, eegy_test = eegData
-freqX_train, freqy_train, freqX_test, freqy_test = freqData
-```
-
-This functions has 3 Parameters:
-- splitData (bool): True -> Splits the Data already in Train and Test Data
-- test_size (float): 0.3 -> If splitData is true then 30% of the data will be test data
-- shuffle (bool): If True, it will shuffle the data
 
 
 # Description of the Repo
