@@ -13,7 +13,14 @@
   - Change Directory where you want to start jupyter lab: `cd /path/to/dir`
   - Start Jupyter Lab: `jupyter lab`
   - Create your own Notebook for Coding
-  
+ 
+## Code Improvements
+- Outlier detection could be improved. So far it is only a simple threshold function
+
+## Current Bugs
+- The 'delete faulty epochs' in the function `prepare_Signal` is not working currently. Somehow this produces too many NaN Values afterwards. Most of the frequency features are getting NaN's even though I replace all NaN's with zeroes...
+
+
 ## Notebook Basics
 ### Local Imports
 With this code you can locally import other functions
