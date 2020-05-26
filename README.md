@@ -1,24 +1,11 @@
 # Fatigue detection from driving persons with EEG - Masterthesis by Raphael Eißler
 
 ## Check the Wiki fore more Infos!!
+- [First time setup]()
 - [Improvements](https://github.com/mudo121/thesis_eeg/wiki/Possible-Improvements)
 - [Bugs / Problems](https://github.com/mudo121/thesis_eeg/wiki/Known-Bugs-or-Issues)
 - [Jupyter Basics for this Repo](https://github.com/mudo121/thesis_eeg/wiki/Jupyter-Notebook-Basics-for-using-existing-Functions)
 - [EEG Data](https://github.com/mudo121/thesis_eeg/wiki/EEG-Data)
-
-## Getting Started
-- Prepare Workspace
-  - Install [Anaconda](https://www.anaconda.com/products/individual)
-  - Create enviorment from file: `conda env create -f environment.yml` (use this [environment.yaml](environment.yml)) (Does'nt work for now...)
-  - Install the conda enviorment into jupyter: `python -m ipykernel install --user --name myenv --display-name "Python (myenv)"` (more infos [here](https://ipython.readthedocs.io/en/stable/install/kernel_install.html))
-- Clone this Repo on to your pc - (Optionally use the GitHub Software)
-- Download the EEG Data from [here](https://1drv.ms/u/s!AuIx_mQRobFA1g8FMEXZBfbdnIgg?e=nMWSxN)
-- Start Coding
-  - Open a anconda powershell
-  - Activate your enviorment: `conda activate yourEnv`
-  - Change Directory where you want to start jupyter lab: `cd /path/to/dir`
-  - Start Jupyter Lab: `jupyter lab`
-  - Create your own Notebook for Coding
 
 
 
