@@ -1,7 +1,7 @@
 # Fatigue detection from driving persons with EEG - Masterthesis by Raphael Eißler
 
 ## Check the Wiki fore more Infos!!
-- [First time setup]()
+- [First time setup](https://github.com/mudo121/thesis_eeg/wiki/First-time-Setup)
 - [Improvements](https://github.com/mudo121/thesis_eeg/wiki/Possible-Improvements)
 - [Bugs / Problems](https://github.com/mudo121/thesis_eeg/wiki/Known-Bugs-or-Issues)
 - [Jupyter Basics for this Repo](https://github.com/mudo121/thesis_eeg/wiki/Jupyter-Notebook-Basics-for-using-existing-Functions)
