@@ -172,7 +172,7 @@ class Frequency_Features(BaseEstimator, TransformerMixin):
         
         All Credits to: https://gist.github.com/aanastasiou/480d81361abcdc794783
         
-        I added only some conversions for a better future calculations
+        I added only some conversions for better future calculations
         '''    
         #Prepend the first value of (s) to the interpolating values. This forces the model to use the same starting point for both the upper and lower envelope models.    
         u_x = [0,]
