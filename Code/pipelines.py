@@ -4,6 +4,7 @@ This file contains functinos where pipelines are defined. E.g. a pre-processing 
 '''
 
 import pandas as pd
+import numpy as np
 from typing import Dict, List
 from sklearn.pipeline import Pipeline
 import os
@@ -15,7 +16,7 @@ from Transfomer_Signal import (BandpassFilter, BandstopFilter, ReplaceOutliers,
                                 CenterData, ResampleSignal)
 from Transformer_Pre_Processing import (SlidingWindow, NormalizeData, DeleteFaultyEpochs,
                                             ReplaceNaNs, Convert3dArrayToSeriesOfDataframes)
-from Transformer_Feature_Extraction import (Frequency_Features)
+from Transformer_Feature_Extraction import (Frequency_Features, Entropy_Features)
 from Measuring_Functions import (getChannelUsageInEpochSeries)
 from plotFunctions import (plotInteractiveEpochs, plotFeatureEpochs)
 from utils import readFileCSV
@@ -62,18 +63,29 @@ def prepare_signal(df : pd.DataFrame, config : Dict) -> pd.Series:
     epochSeries = pre_processing_pipeline.fit_transform(df)
     return epochSeries
 
-def feature_extraction(epochSeries : pd.Series, config : Dict) -> pd.Series:
+def feature_extraction(epochSeries : pd.Series, config : Dict) -> (pd.DataFrame, np.ndarray, List[str]):
     ''' Extract features from the generated epoch series 
     
     Do the whole feature extraction in a pipeline
+
+    Returns a tuple of:
+     - A frequency feature dataframe
+     - A entropy 3d Numpy Array
+     - A entropy feature list
+
     '''
 
-    feature_extraction_pipeline = Pipeline([
+    frequency_feature_extraction_pipeline = Pipeline([
         ("Frequency Band feature extraction", Frequency_Features(samplingRate=config['samplingRate'], frequencyBands=config['frequencyBands'],
                                                                 numberOfChannels=config['numberOfChannels'], epochSizeCalculation=config['epochSizeCalculation']))
     ])
+    freq_feature_df = frequency_feature_extraction_pipeline.fit_transform(epochSeries)
 
-    epochSeries = feature_extraction_pipeline.fit_transform(epochSeries)
+    entropy_feature_extraction_pipeline = Pipeline([
+        ("Entropy Feature Extraction", Entropy_Features(samplingRate=config['samplingRate'])) 
+    ])
 
-    return epochSeries
+    print("###\nExtracting Entropy Features...")
+    entropy_array, entropy_feature_list = entropy_feature_extraction_pipeline.fit_transform(epochSeries)
 
+    return (freq_feature_df, entropy_array, entropy_feature_list)

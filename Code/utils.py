@@ -115,3 +115,24 @@ def loadFeaturesTxt(filePath : str) -> List:
             line = line.replace("\n", "")
             featureList.append(line)
     return featureList
+
+
+def addFeatureToList(featureList, featureListIndex, newFeatureName):
+    ''' Add a feature to a list, with a given index'''
+    if newFeatureName not in featureList:
+        featureList[featureListIndex] = newFeatureName
+    return featureList
+
+def createEmptyNumpyArray(d1, d2=None, d3=None):
+    ''' Function to create an empty numpy Array, with the given dimesion'''
+    if d2 is None and d3 is None:
+        numpyArray = np.zeros((d1))
+    
+    elif d2 is not None and d3 is None:
+        numpyArray = np.zeros((d1, d2))
+    
+    elif d3 is not None and d3 is not None:
+        numpyArray = np.zeros((d1, d2, d3))
+    
+    print("Created Numpy Array - Shape: {}".format(numpyArray.shape))
+    return numpyArray

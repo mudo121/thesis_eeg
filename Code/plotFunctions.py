@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider, Button, RadioButtons
+from typing import List
 
 def createSampleEpochSeries() -> pd.Series:
     epoch_1_df = pd.DataFrame()
@@ -137,8 +138,6 @@ def plot_magnitudeFreq_and_PSD(data, samplingRate, signalName):
     fig.tight_layout()
     plt.show()
 
-    return plt
-
 
 def plot_feature(feature_df, featureName = None, frequencyBand = None, channel = None):
     '''
@@ -166,6 +165,22 @@ def plot_feature(feature_df, featureName = None, frequencyBand = None, channel =
     for column in feature_df:
         plt.plot(feature_df[column], label=column)
     plt.legend()
+
+
+def createEntropyFeaturePlot(entropyArray : np.ndarray, featureIndex, featureList : List):
+    ''' The indx can be a number or a list '''
+    fig, ax = plt.subplots(figsize=(15,5))
+    
+    if type(featureIndex) is list:
+        ax.set_title('Entropy Feature Comparison')
+        for index in featureIndex:
+            ax.plot(entropyArray[:,:,index], label = featureList[index])
+        plt.legend(loc="best")
+    else:
+        ax.set_title('Entropy Feature {}'.format(featureList[featureIndex]))
+        ax.plot(entropyArray[:,:,featureIndex])
+        
+    return fig, ax
 
 if __name__ == "__main__":
     plotInteractiveEpochs()

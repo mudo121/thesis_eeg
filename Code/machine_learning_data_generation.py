@@ -18,12 +18,13 @@ from pipelines import convert_data, filter_signal, prepare_signal, feature_extra
 from consts import TARGET_AWAKE, TARGET_FATIGUE, TARGET_NORMAL, TARGET_UNLABELED
 
 
-def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.DataFrame, List[str]):
-    ''' Process a given filepath with the current pipelines 
+def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.DataFrame, List[str], np.ndarray, List[str]):
+    ''' Process a given filepath with the current pipelines
     
-    This creates two different data objects:
+    This creates three different data objects:
         epochSeries: This is a panda.Series which contains dataframes. Each index at the series represens one epoch
         frequencyFreatureDf: This is a dataframe of the frequency features of the epochSeries. The index represnts the epochs. The features are the columns
+        entropyArray: There is the entropy data stored
     '''
     if not os.path.isfile(filepath):
         raise Exception("The file '{}' does not exists!".format(filepath))
@@ -32,28 +33,9 @@ def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.Dat
     df, channelNameList =  convert_data(df=df, config=yamlConfig, starttime=None)
     df = filter_signal(df=df, config=yamlConfig) # general filtering
     epochSeries = prepare_signal(df=df, config=yamlConfig)   # pre-processing
-    frequencyFeatureDf = feature_extraction(epochSeries=epochSeries, config=yamlConfig) # extract features
+    frequencyFeatureDf, entropyArray, entropyFeatureList = feature_extraction(epochSeries=epochSeries, config=yamlConfig) # extract features
     
-    return epochSeries, frequencyFeatureDf, channelNameList
-
-
-def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.DataFrame, List[str]):
-    ''' Process a given filepath with the current pipelines 
-    
-    This creates two different data objects:
-        epochSeries: This is a panda.Series which contains dataframes. Each index at the series represens one epoch
-        frequencyFreatureDf: This is a dataframe of the frequency features of the epochSeries. The index represnts the epochs. The features are the columns
-    '''
-    if not os.path.isfile(filepath):
-        raise Exception("The file '{}' does not exists!".format(filepath))
-    
-    df = readFileCSV(filepath)
-    df, channelNameList =  convert_data(df=df, config=yamlConfig, starttime=None)
-    df = filter_signal(df=df, config=yamlConfig) # general filtering
-    epochSeries = pre_process_signal(df=df, config=yamlConfig)   # pre-processing
-    frequencyFeatureDf = feature_extraction(epochSeries=epochSeries, config=yamlConfig) # extract features
-    
-    return epochSeries, frequencyFeatureDf, channelNameList
+    return epochSeries, frequencyFeatureDf, channelNameList, entropyArray, entropyFeatureList
 
 
 def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : str, yamlConfig):
@@ -67,13 +49,13 @@ def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : 
     '''
     print ("Starting to process {}...".format(rawFilePath))
     # process the file
-    epochSeries, frequencyFeatureDf, channelNameList = processRawFileWithPipeline(filepath=rawFilePath, yamlConfig=yamlConfig)
+    epochSeries, frequencyFeatureDf, channelNameList, entropyArray, entropyFeatureList = processRawFileWithPipeline(filepath=rawFilePath, yamlConfig=yamlConfig)
     
     # save the epoch series
-    epochSeries.to_pickle(os.path.join(fileDir,'epochSeries_{}.pkl'.format(label)))
+    epochSeries.to_pickle(os.path.join(fileDir, 'epochSeries_{}.pkl'.format(label)))
     
     # save the frequency df
-    frequencyFeatureDf.to_pickle(os.path.join(fileDir,'frequencyFeaturesDf_{}.pkl'.format(label)))
+    frequencyFeatureDf.to_pickle(os.path.join(fileDir, 'frequencyFeaturesDf_{}.pkl'.format(label)))
     
     # save the channel name list
     saveFeatureListToFile(featureList=channelNameList,
@@ -82,6 +64,13 @@ def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : 
     # save frequency features
     saveFeatureListToFile(featureList=list(frequencyFeatureDf.columns),
                           filepath=os.path.join(fileDir, "features_frequency_df.txt"))
+
+    # Save entropy array (not a pickle file)
+    np.save(os.path.join(fileDir, "entropyFeatures_{}.npy".format(label)), entropyArray)
+
+    # Save entropy feature list
+    saveFeatureListToFile(featureList=entropyFeatureList,
+                          filepath=os.path.join(fileDir, "features_entropy.txt"))
 
 
 def processRawDatasetToPickleFiles(datasetDirPath : str, device : str, awakeFileName : str,
@@ -141,24 +130,29 @@ def loadPickeldData(dataDir : str, label : str):
     ''' Load the epochseries and frequency feature df
     
     @param str dataDir: Directory where the data is
-    @param str label: decide which 
+    @param str label: decide which
     '''
     try:
-        epochSeries = pd.read_pickle(os.path.join(dataDir,'epochSeries_{}.pkl'.format(label.lower())))
+        epochSeries = pd.read_pickle(os.path.join(dataDir, 'epochSeries_{}.pkl'.format(label.lower())))
     except Exception as e:
         #print (e)
         epochSeries = None
         
     try:
-        frequencyFeatureDf = pd.read_pickle(os.path.join(dataDir,'frequencyFeaturesDf_{}.pkl'.format(label.lower())))
+        frequencyFeatureDf = pd.read_pickle(os.path.join(dataDir, 'frequencyFeaturesDf_{}.pkl'.format(label.lower())))
     except Exception as e:
         #print (e)
         frequencyFeatureDf = None
 
-    return epochSeries, frequencyFeatureDf
+    try:
+        entropy_3d_array = np.load(os.path.join(dataDir, 'entropyFeatures_{}.npy'.format(label.lower())))
+    except Exception as e:
+        entropy_3d_array = None
+
+    return epochSeries, frequencyFeatureDf, entropy_3d_array
 
 
-def loadPickeldDataset(datasetDirPath : str) -> Dict:
+def loadPickeldDataset(datasetDirPath:str) -> Dict:
     ''' This functions loads a complete dataset into a dict
     
     Each subject should have a folder with a number in that dict.
@@ -178,22 +172,22 @@ def loadPickeldDataset(datasetDirPath : str) -> Dict:
         for subjectDir in dirs:
             print("Load Subject {} Data...".format(subjectDir))
             
-            epochSeries_awake, frequencyFeatureDf_awake = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label=TARGET_AWAKE)
+            epochSeries_awake, frequencyFeatureDf_awake, entropy_3d_array_awake = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                            label=TARGET_AWAKE)
             
-            epochSeries_normal, frequencyFeatureDf_normal = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label=TARGET_NORMAL)
+            epochSeries_normal, frequencyFeatureDf_normal, entropy_3d_array_normal = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                              label=TARGET_NORMAL)
             
-            epochSeries_fatigue, frequencyFeatureDf_fatigue = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label=TARGET_FATIGUE)
+            epochSeries_fatigue, frequencyFeatureDf_fatigue, entropy_3d_array_fatigue = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                                label=TARGET_FATIGUE)
             
-            epochSeries_unlabeled, frequencyFeatureDf_unlabeled = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                          label=TARGET_UNLABELED)
+            epochSeries_unlabeled, frequencyFeatureDf_unlabeled, entropy_3d_array_unlabeled = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                                    label=TARGET_UNLABELED)
             
-            datasetDict[subjectDir] = {TARGET_AWAKE : (epochSeries_awake, frequencyFeatureDf_awake),
-                                       TARGET_NORMAL : (epochSeries_normal, frequencyFeatureDf_normal),
-                                       TARGET_FATIGUE : (epochSeries_fatigue, frequencyFeatureDf_fatigue),
-                                       TARGET_UNLABELED : (epochSeries_unlabeled, frequencyFeatureDf_unlabeled)}
+            datasetDict[subjectDir] = {TARGET_AWAKE : (epochSeries_awake, frequencyFeatureDf_awake, entropy_3d_array_awake),
+                                       TARGET_NORMAL : (epochSeries_normal, frequencyFeatureDf_normal, entropy_3d_array_normal),
+                                       TARGET_FATIGUE : (epochSeries_fatigue, frequencyFeatureDf_fatigue, entropy_3d_array_fatigue),
+                                       TARGET_UNLABELED : (epochSeries_unlabeled, frequencyFeatureDf_unlabeled, entropy_3d_array_unlabeled)}
     return datasetDict
 
 
@@ -208,7 +202,7 @@ def createXyFromDataSeries(dataSeries : pd.Series, target : int) -> (np.ndarray,
         samples: Number of samples in the epoch - E.g. if the epoch contains 200 values then the timestep should contain 200 values
         features: The actual value
     
-    y should look tlike this [classIds] 
+    y should look tlike this [classIds]
         classIds: The label for the sample of the X Data
     '''
     
@@ -267,7 +261,21 @@ def createXyFromFrequencyDf(freqDf : pd.DataFrame, target : int) -> (np.ndarray,
     
     return X, y
 
-def createMachineLearningDataset(eegDataset : Dict, targetLabelDict : Dict) -> (((np.array, np.array)),(np.array, np.array)):
+def createXyFromEntropyArray(entropyArray : np.ndarray, target : int) -> (np.ndarray, np.ndarray):
+    ''' Create X and y for the entropy Features
+    
+    However the entropy array is already good, we just have to make the y array
+    '''
+    # X is already good
+    X = entropyArray
+    
+    # Create a y array with the amount of epochs
+    y = [target] * X.shape[0]
+    y = np.array(y)
+    
+    return X, y
+
+def createMachineLearningDataset(eegDataset : Dict, targetLabelDict : Dict) -> (((np.array, np.array)),(np.array, np.array), (np.array, np.array)):
     ''' This functions creates from a loaded pickel dataset X and y data for the eeg data and frequency feature data
     
     The functions returns X_eegData, y_eegData and X_frequncyFeatures, y_frequencyFeatures
@@ -281,6 +289,9 @@ def createMachineLearningDataset(eegDataset : Dict, targetLabelDict : Dict) -> (
     
     X_frequency_features = None
     y_frequency_features = None
+    
+    X_entropy_features = None
+    y_entropy_features = None
     
     for subject in eegDataset:
         for target in targetLabelDict:
@@ -301,7 +312,7 @@ def createMachineLearningDataset(eegDataset : Dict, targetLabelDict : Dict) -> (
                 
                 # Create X,y for the frequency features
                 tempX_freq, tempy_freq = createXyFromFrequencyDf(freqDf = eegDataset[subject][target][1],
-                                                                target = targetLabelDict[target])
+                                                                 target = targetLabelDict[target])
                 
                 try:
                     X_frequency_features = np.concatenate((X_frequency_features, tempX_freq))
@@ -310,12 +321,24 @@ def createMachineLearningDataset(eegDataset : Dict, targetLabelDict : Dict) -> (
                     X_frequency_features = tempX_freq
                     y_frequency_features = tempy_freq
                     
+                
+                # Create X,y for the entropy features
+                tempX_entropy, tempy_entropy = createXyFromEntropyArray(entropyArray = eegDataset[subject][target][2],
+                                                                        target = targetLabelDict[target])
+                
+                try:
+                    X_entropy_features = np.concatenate((X_entropy_features, tempX_entropy))
+                    y_entropy_features = np.concatenate((y_entropy_features, tempy_entropy))
+                except ValueError: # happens the first, when the init value is none
+                    X_entropy_features = tempX_entropy
+                    y_entropy_features = tempy_entropy
+                    
             
             except TypeError:
                 print("Skipping Target: {}".format(target))
     
     print("Done!")
-    return ((X_eeg_series, y_eeg_series), (X_frequency_features, y_frequency_features))
+    return ((X_eeg_series, y_eeg_series), (X_frequency_features, y_frequency_features), (X_entropy_features, y_entropy_features))
 
 def createAndSafeMlDataset(eegDataset : Dict[str, Dict[str ,Tuple[pd.Series, pd.DataFrame]]], targetLabelDict : Dict,
                            dirPath : str) ->  ((np.array, np.array), (np.array, np.array)):
@@ -324,21 +347,23 @@ def createAndSafeMlDataset(eegDataset : Dict[str, Dict[str ,Tuple[pd.Series, pd.
         raise Exception("The given directory path is not valid! Given path: {}".format(dirPath))
     
     print("Creating Machine Learning Dataset!")
-    eegData, frequencyData = createMachineLearningDataset(eegDataset, targetLabelDict)
-    
-    #Todo - Build the feature df somehow into that too
+    eegData, freqData, entropyData = createMachineLearningDataset(eegDataset, targetLabelDict)
+
     
     print("\nSaving Machine Learning Dataset into this directory: {}".format(dirPath))
     np.save(os.path.join(dirPath, "X_eegData.npy"), eegData[0]) # X_eegData
     np.save(os.path.join(dirPath, "y_eegData.npy"), eegData[1]) # y_eegData
 
-    np.save(os.path.join(dirPath, "X_frequencyData.npy"), frequencyData[0]) # X_frequencyData
-    np.save(os.path.join(dirPath, "y_frequencyData.npy"), frequencyData[1]) # y_frequencyData
+    np.save(os.path.join(dirPath, "X_frequencyData.npy"), freqData[0]) # X_frequencyData
+    np.save(os.path.join(dirPath, "y_frequencyData.npy"), freqData[1]) # y_frequencyData
+
+    np.save(os.path.join(dirPath, "X_entropyData.npy"), entropyData[0]) # X_frequencyData
+    np.save(os.path.join(dirPath, "y_entropyData.npy"), entropyData[1]) # y_frequencyData
     
     # Save target labels
     saveDictToFile(targetLabelDict, filepath=os.path.join(dirPath,'target_labels.txt'))
     
-    return eegData, frequencyData
+    return eegData, freqData, entropyData
 
 @deprecated("Rather use the other functions here to create a feature df")
 def generateFeatureDf(csvFilePath, starttime, yamlConfig, label : str, generateData : bool = True, mainDir : str = None) -> (pd.Series, pd.DataFrame):
@@ -396,8 +421,11 @@ def loadOnlineEEGdata(dirPath="D:/Masterthesis/EEG_Data/eeg_data_online", splitD
     X_eeg = np.load(os.path.join(dirPath, 'X_eegData.npy'))
     y_eeg = np.load(os.path.join(dirPath, 'y_eegData.npy'))
     
-    X_freq = np.load(os.path.join(dirPath, 'X_frequencyData.npy'), allow_pickle=True)
+    X_freq = np.load(os.path.join(dirPath, 'X_frequencyData.npy'), allow_pickle=True) # not sure, why I need this
     y_freq = np.load(os.path.join(dirPath, 'y_frequencyData.npy'))
+
+    X_entropy = np.load(os.path.join(dirPath, 'X_entropyData.npy'))
+    y_entropy = np.load(os.path.join(dirPath, 'y_entropyData.npy'))
     
     # load target labels
     
@@ -420,6 +448,14 @@ def loadOnlineEEGdata(dirPath="D:/Masterthesis/EEG_Data/eeg_data_online", splitD
         freqData = (X_freq_train, y_freq_train, X_freq_test, y_freq_test)
         print("Freq Data Shape:")
         print(X_freq_train.shape, y_freq_train.shape, X_freq_test.shape, y_freq_test.shape)
+
+
+        # Entropy Data
+        X_entropy_train, X_entropy_test, y_entropy_train, y_entropy_test = train_test_split(X_entropy, y_entropy, test_size=test_size, shuffle=shuffle) # 70% training and 30% test
+        entropyData = (X_entropy_train, y_entropy_train, X_entropy_test, y_entropy_test)
+        print("Entropy Data Shape:")
+        print(X_entropy_train.shape, y_entropy_train.shape, X_entropy_test.shape, y_entropy_test.shape)
+
     else:
         print("Data does not get splitted into train and test!")
         
@@ -429,8 +465,12 @@ def loadOnlineEEGdata(dirPath="D:/Masterthesis/EEG_Data/eeg_data_online", splitD
         print("Freq Data Shape:")
         print(X_freq.shape, y_freq.shape)
 
+        print("Entropy Data Shape:")
+        print(X_entropy.shape, y_entropy.shape)
+
         eegData = (X_eeg, y_eeg)
         freqData = (X_freq, y_freq)
+        entropyData = (X_entropy, y_freq)
     
-    return (eegData, freqData)
+    return (eegData, freqData, entropyData)
 

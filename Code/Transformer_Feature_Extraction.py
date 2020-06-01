@@ -4,14 +4,15 @@ from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 from typing import List, Dict
 import yasa
+import entropy
 import numpy as np
 from scipy.interpolate import interp1d
 import statistics
+from sklearn import preprocessing
 
 # Custom Imports
 from consts import *
-from utils import createChannelList
-
+from utils import createChannelList, createEmptyNumpyArray, addFeatureToList
 
 class DummyTransformer(BaseEstimator, TransformerMixin):
     ''' Custom Transfomer
@@ -424,3 +425,146 @@ class Frequency_Features(BaseEstimator, TransformerMixin):
                     epochFeatureDf[columnName] = frequencyDict[feature]
 
         return epochFeatureDf
+
+
+class Entropy_Features(BaseEstimator, TransformerMixin):
+    ''' Transformer to extract Entropy Feature from an epoch Series. All entropy features will be normalized between 0-1
+    '''
+    def __init__(self, samplingRate):
+        self.samplingRate = samplingRate
+
+    def fit(self, df : pd.Series, y=None):
+        return self # nothing else to do
+
+    def transform(self, epochSeries : pd.Series) -> (np.ndarray, List[str]):
+        ''' Returns a 3d Entropy Array with a list of the feature names '''
+        entropyArray, entropyFeatureList = self.createEntropyFeatureArray(epochSeries=epochSeries,
+                                                                          samplingFreq=self.samplingRate)
+        return (entropyArray, entropyFeatureList)
+
+
+    def createEntropyFeatureArray(self, epochSeries : pd.Series, samplingFreq : int) -> (np.ndarray, List[str]):
+        ''' Creates 3d Numpy with a entropy features - also returns the feature names
+        
+        Creates the following features:
+            - Approximate Entropy (AE)
+            - Sample Entropy (SamE)
+            - Spectral Entropy (SpeE)
+            - Permutation Entropy (PE)
+            - Singular Value Decomposition Entropy (SvdE)
+
+        For each channel there are 5 features then
+
+        NaN Values will be set to Zero (not good but it works for now)
+
+        '''
+        # Create np array, where the data will be stored
+        d1 = len(epochSeries) # First Dimesion
+        d2 = 1 # only one sample in that epoch
+        
+        channels = len(epochSeries[0].columns)
+        d3 = channels * 5 # second dimension - 5 because we calculate five different entropies for each channel
+        
+        entropyFeatureArrayX = createEmptyNumpyArray(d1, d2, d3)
+        
+        # Create a list where all feature names are stored
+        entropyFeatureList = [None] * d3
+        
+        stepSize = 5 # step is 5 because we calculate 5 different entropies
+        for i in range (0, len(epochSeries)): # loop through the epochs
+            
+            # We start the the stepz size and loop through the columns, but we have to multiply by the stepzsize and add once the step size (because we don't start at 0)
+            for j in range(stepSize, (len(epochSeries[i].columns)*stepSize)+stepSize, stepSize): # loop through the columns
+                
+                # j_epoch is the normalized index for the epoch series (like the step size would be 1)
+                j_epoch = j/stepSize - 1
+                
+                # get the column name
+                col = epochSeries[i].columns[j_epoch]
+                
+                # The values of the epoch of the current column
+                colEpochList = epochSeries[i][col].tolist()
+                
+                ######################################
+                # calculate Approximate Entropy
+                # ------------------------------------
+                val = entropy.app_entropy(colEpochList, order=2)
+                # if the value is NaN, just set it to 0
+                if np.isnan(val):
+                    val = 0
+                entropyFeatureArrayX[i][0][j-1] = val
+                
+                # add approximate entropy feature to the list
+                entropyFeatureList = addFeatureToList(featureList = entropyFeatureList,
+                                                    featureListIndex = j-1,
+                                                    newFeatureName = "{col}_approximate_entropy".format(col=col))
+                
+                ######################################
+                # calculate Sample Entropy
+                # ------------------------------------
+                val = entropy.sample_entropy(colEpochList, order=2)
+                # if the value is NaN, just set it to 0
+                if np.isnan(val):
+                    val = 0
+                entropyFeatureArrayX[i][0][j-2] = val
+                
+                entropyFeatureList = addFeatureToList(featureList = entropyFeatureList,
+                                                    featureListIndex = j-2,
+                                                    newFeatureName = "{col}_sample_entropy".format(col=col))
+                
+                ######################################
+                # calculate Spectral Entropy
+                # ------------------------------------
+                val = entropy.spectral_entropy(colEpochList, sf=samplingFreq ,method='fft', normalize=True)
+                # if the value is NaN, just set it to 0
+                if np.isnan(val):
+                    val = 0
+                entropyFeatureArrayX[i][0][j-3] = val
+                
+                entropyFeatureList = addFeatureToList(featureList = entropyFeatureList,
+                                                    featureListIndex = j-3,
+                                                    newFeatureName = "{col}_spectral_entropy".format(col=col))
+                
+                ######################################
+                # calculate Permutation Entropy
+                # ------------------------------------
+                val = entropy.perm_entropy(colEpochList, order=3, normalize=True, delay=1)
+                # if the value is NaN, just set it to 0
+                if np.isnan(val):
+                    val = 0
+                entropyFeatureArrayX[i][0][j-4] = val
+                
+                entropyFeatureList = addFeatureToList(featureList = entropyFeatureList,
+                                                    featureListIndex = j-4,
+                                                    newFeatureName = "{col}_permutation_entropy".format(col=col))
+                
+                ######################################
+                # calculate Singular Value Decomposition entropy.
+                # ------------------------------------
+                val = entropy.svd_entropy(colEpochList, order=3, normalize=True, delay=1)
+                # if the value is NaN, just set it to 0
+                if np.isnan(val):
+                    val = 0
+                entropyFeatureArrayX[i][0][j-5] = val
+                
+                entropyFeatureList = addFeatureToList(featureList = entropyFeatureList,
+                                                    featureListIndex = j-5,
+                                                    newFeatureName = "{col}_svd_entropy".format(col=col))
+                
+                #break
+            #break
+        
+
+        # Normalize everything to 0-1
+        print("Normalizing the entropy features...")
+
+        # Norm=max -> then it will normalize between 0-1, axis=0 is important too!
+        # We need to reshape it to a 2d Array
+        X_entropy_norm = preprocessing.normalize(entropyFeatureArrayX.reshape(entropyFeatureArrayX.shape[0], entropyFeatureArrayX.shape[2]), norm='max', axis=0)
+
+        # Now reshape it back to a simple 3D array
+        X_entropy_norm = X_entropy_norm.reshape(X_entropy_norm.shape[0], 1, X_entropy_norm.shape[1])
+
+
+        return X_entropy_norm, entropyFeatureList
+
