@@ -1,0 +1,605 @@
+Camera Position: (-50.581993, 1.6659787, 1112.7651)
+Camera Rotation: (6.2128465E-4, -0.07585493, -4.1314407E-4, -0.9971186)
+Camera Direction: (0.15127221, 0.001301667, 0.9884913)
+cam.setLocation(new Vector3f(-50.581993f, 1.6659787f, 1112.7651f));
+cam.setRotation(new Quaternion(6.2128465E-4f, -0.07585493f, -4.1314407E-4f, -0.9971186f));
+Camera Position: (-40.498398, 1.6659884, 1174.212)
+Camera Rotation: (5.482352E-4, -0.08180953, -4.7314097E-4, -0.9966478)
+Camera Direction: (0.16307004, 0.0011702096, 0.9866138)
+cam.setLocation(new Vector3f(-40.498398f, 1.6659884f, 1174.212f));
+cam.setRotation(new Quaternion(5.482352E-4f, -0.08180953f, -4.7314097E-4f, -0.9966478f));
+Camera Position: (-27.669899, 1.6659857, 1249.6737)
+Camera Rotation: (5.6579494E-4, -0.087245926, -3.8169892E-4, -0.99618655)
+Camera Direction: (0.17382601, 0.0011938779, 0.98477566)
+cam.setLocation(new Vector3f(-27.669899f, 1.6659857f, 1249.6737f));
+cam.setRotation(new Quaternion(5.6579494E-4f, -0.087245926f, -3.8169892E-4f, -0.99618655f));
+Camera Position: (-18.512451, 1.6659908, 1303.9904)
+Camera Rotation: (4.8068835E-4, -0.08664232, -5.8581127E-4, -0.9962392)
+Camera Direction: (0.17263238, 0.0010592733, 0.98498577)
+cam.setLocation(new Vector3f(-18.512451f, 1.6659908f, 1303.9904f));
+cam.setRotation(new Quaternion(4.8068835E-4f, -0.08664232f, -5.8581127E-4f, -0.9962392f));
+Camera Position: (-14.476762, 1.6660075, 1326.4015)
+Camera Rotation: (4.9603754E-4, -0.08448522, -2.411617E-4, -0.9964246)
+Camera Direction: (0.16836606, 0.0010292772, 0.98572403)
+cam.setLocation(new Vector3f(-14.476762f, 1.6660075f, 1326.4015f));
+cam.setRotation(new Quaternion(4.9603754E-4f, -0.08448522f, -2.411617E-4f, -0.9964246f));
+Camera Position: (-11.676417, 1.6659932, 1343.0056)
+Camera Rotation: (4.5409374E-4, -0.086752795, -6.6871796E-4, -0.9962296)
+Camera Direction: (0.17285077, 0.0010207895, 0.9849475)
+cam.setLocation(new Vector3f(-11.676417f, 1.6659932f, 1343.0056f));
+cam.setRotation(new Quaternion(4.5409374E-4f, -0.086752795f, -6.6871796E-4f, -0.9962296f));
+Camera Position: (-8.724971, 1.666012, 1359.637)
+Camera Rotation: (5.209558E-4, -0.07798185, 1.3163777E-4, -0.9969546)
+Camera Direction: (0.15548886, 0.0010182078, 0.98783714)
+cam.setLocation(new Vector3f(-8.724971f, 1.666012f, 1359.637f));
+cam.setRotation(new Quaternion(5.209558E-4f, -0.07798185f, 1.3163777E-4f, -0.9969546f));
+Camera Position: (-7.0479193, 1.6660154, 1374.4338)
+Camera Rotation: (5.152906E-4, -0.036770694, 2.2185751E-4, -0.9993236)
+Camera Direction: (0.07349188, 0.0010135684, 0.9972953)
+cam.setLocation(new Vector3f(-7.0479193f, 1.6660154f, 1374.4338f));
+cam.setRotation(new Quaternion(5.152906E-4f, -0.036770694f, 2.2185751E-4f, -0.9993236f));
+Camera Position: (-6.5429945, 1.666033, 1390.3519)
+Camera Rotation: (5.030276E-4, 0.0059990827, 4.4276682E-4, -0.99998176)
+Camera Direction: (-0.011997501, 0.0010113491, 0.9999275)
+cam.setLocation(new Vector3f(-6.5429945f, 1.666033f, 1390.3519f));
+cam.setRotation(new Quaternion(5.030276E-4f, 0.0059990827f, 4.4276682E-4f, -0.99998176f));
+Camera Position: (-9.342284, 1.6660554, 1415.039)
+Camera Rotation: (3.6462003E-4, 0.10926244, 9.483027E-4, -0.9940124)
+Camera Direction: (-0.21721575, 9.321014E-4, 0.97612315)
+cam.setLocation(new Vector3f(-9.342284f, 1.6660554f, 1415.039f));
+cam.setRotation(new Quaternion(3.6462003E-4f, 0.10926244f, 9.483027E-4f, -0.9940124f));
+Camera Position: (-11.852981, 1.666058, 1423.9349)
+Camera Rotation: (2.9607455E-4, 0.15944695, 0.0010852655, -0.98720586)
+Camera Direction: (-0.3148133, 9.306576E-4, 0.9491532)
+cam.setLocation(new Vector3f(-11.852981f, 1.666058f, 1423.9349f));
+cam.setRotation(new Quaternion(2.9607455E-4f, 0.15944695f, 0.0010852655f, -0.98720586f));
+Camera Position: (-16.541933, 1.6660566, 1435.0432)
+Camera Rotation: (2.1330458E-4, 0.23038083, 0.0011194327, -0.9730999)
+Camera Direction: (-0.44836664, 9.30925E-4, 0.89384925)
+cam.setLocation(new Vector3f(-16.541933f, 1.6660566f, 1435.0432f));
+cam.setRotation(new Quaternion(2.1330458E-4f, 0.23038083f, 0.0011194327f, -0.9730999f));
+Camera Position: (-30.749594, 1.666039, 1455.7812)
+Camera Rotation: (5.4350003E-5, 0.35199746, 0.0011753644, -0.93600017)
+Camera Direction: (-0.6589393, 9.291939E-4, 0.75219554)
+cam.setLocation(new Vector3f(-30.749594f, 1.666039f, 1455.7812f));
+cam.setRotation(new Quaternion(5.4350003E-5f, 0.35199746f, 0.0011753644f, -0.93600017f));
+Camera Position: (-38.148643, 1.6660719, 1462.9193)
+Camera Rotation: (-1.7668652E-4, 0.42359525, 0.0014670633, -0.9058504)
+Camera Direction: (-0.76742834, 9.227789E-4, 0.64113414)
+cam.setLocation(new Vector3f(-38.148643f, 1.6660719f, 1462.9193f));
+cam.setRotation(new Quaternion(-1.7668652E-4f, 0.42359525f, 0.0014670633f, -0.9058504f));
+Camera Position: (-45.36106, 1.6660258, 1468.1841)
+Camera Rotation: (2.5431992E-4, 0.4683081, 5.3278095E-4, -0.883565)
+Camera Direction: (-0.82756096, 9.484276E-4, 0.5613749)
+cam.setLocation(new Vector3f(-45.36106f, 1.6660258f, 1468.1841f));
+cam.setRotation(new Quaternion(2.5431992E-4f, 0.4683081f, 5.3278095E-4f, -0.883565f));
+Camera Position: (-55.723236, 1.6660316, 1474.4081)
+Camera Rotation: (8.181846E-5, 0.51607627, 9.741405E-4, -0.8565421)
+Camera Direction: (-0.88408196, 0.0011456235, 0.46733057)
+cam.setLocation(new Vector3f(-55.723236f, 1.6660316f, 1474.4081f));
+cam.setRotation(new Quaternion(8.181846E-5f, 0.51607627f, 9.741405E-4f, -0.8565421f));
+Camera Position: (-65.82582, 1.6660198, 1479.1289)
+Camera Rotation: (2.6039366E-4, 0.5510586, 6.2063703E-4, -0.8344663)
+Camera Direction: (-0.91967934, 0.0011185942, 0.39266872)
+cam.setLocation(new Vector3f(-65.82582f, 1.6660198f, 1479.1289f));
+cam.setRotation(new Quaternion(2.6039366E-4f, 0.5510586f, 6.2063703E-4f, -0.8344663f));
+Camera Position: (-74.91783, 1.6660205, 1482.6183)
+Camera Rotation: (2.3256749E-4, 0.5780611, 6.1746367E-4, -0.81599325)
+Camera Direction: (-0.9433876, 0.0010934104, 0.3316906)
+cam.setLocation(new Vector3f(-74.91783f, 1.6660205f, 1482.6183f));
+cam.setRotation(new Quaternion(2.3256749E-4f, 0.5780611f, 6.1746367E-4f, -0.81599325f));
+Camera Position: (-85.96135, 1.6660365, 1485.8918)
+Camera Rotation: (-3.241333E-5, 0.61621034, 9.0579846E-4, -0.787581)
+Camera Direction: (-0.9706313, 0.0010652686, 0.24056953)
+cam.setLocation(new Vector3f(-85.96135f, 1.6660365f, 1485.8918f));
+cam.setRotation(new Quaternion(-3.241333E-5f, 0.61621034f, 9.0579846E-4f, -0.787581f));
+Camera Position: (-98.0277, 1.6659981, 1488.3245)
+Camera Rotation: (4.385534E-4, 0.6430037, 2.9530618E-4, -0.7658628)
+Camera Direction: (-0.9849051, 0.0010515095, 0.17309201)
+cam.setLocation(new Vector3f(-98.0277f, 1.6659981f, 1488.3245f));
+cam.setRotation(new Quaternion(4.385534E-4f, 0.6430037f, 2.9530618E-4f, -0.7658628f));
+Camera Position: (-130.04173, 1.6660023, 1492.6212)
+Camera Rotation: (5.082977E-4, 0.6771495, 2.0396948E-4, -0.73584527)
+Camera Direction: (-0.9965543, 0.0010242925, 0.082936645)
+cam.setLocation(new Vector3f(-130.04173f, 1.6660023f, 1492.6212f));
+cam.setRotation(new Quaternion(5.082977E-4f, 0.6771495f, 2.0396948E-4f, -0.73584527f));
+Camera Position: (-148.96909, 1.6660018, 1493.924)
+Camera Rotation: (5.516494E-4, 0.6881648, 1.579644E-4, -0.7255542)
+Camera Direction: (-0.99860156, 0.0010179142, 0.052857876)
+cam.setLocation(new Vector3f(-148.96909f, 1.6660018f, 1493.924f));
+cam.setRotation(new Quaternion(5.516494E-4f, 0.6881648f, 1.579644E-4f, -0.7255542f));
+Camera Position: (-172.39072, 1.6660111, 1494.4541)
+Camera Rotation: (4.959444E-4, 0.7081523, 2.2085017E-4, -0.7060595)
+Camera Direction: (-0.9999951, 0.0010131237, -0.0029598475)
+cam.setLocation(new Vector3f(-172.39072f, 1.6660111f, 1494.4541f));
+cam.setRotation(new Quaternion(4.959444E-4f, 0.7081523f, 2.2085017E-4f, -0.7060595f));
+Camera Position: (-202.3109, 1.6659857, 1494.1422)
+Camera Rotation: (8.2098454E-4, 0.7040096, -1.10190434E-4, -0.71019)
+Camera Direction: (-0.9999613, 0.0010109597, 0.008739591)
+cam.setLocation(new Vector3f(-202.3109f, 1.6659857f, 1494.1422f));
+cam.setRotation(new Quaternion(8.2098454E-4f, 0.7040096f, -1.10190434E-4f, -0.71019f));
+Camera Position: (-226.1217, 1.6660026, 1494.5541)
+Camera Rotation: (6.580994E-4, 0.70064116, 5.0796767E-5, -0.71351355)
+Camera Direction: (-0.9998339, 0.0010103063, 0.01820302)
+cam.setLocation(new Vector3f(-226.1217f, 1.6660026f, 1494.5541f));
+cam.setRotation(new Quaternion(6.580994E-4f, 0.70064116f, 5.0796767E-5f, -0.71351355f));
+Camera Position: (-262.0939, 1.6659993, 1494.18)
+Camera Rotation: (6.8721E-4, 0.7108508, 3.3308184E-5, -0.70334256)
+Camera Direction: (-0.99994314, 0.0010140424, -0.0106185675)
+cam.setLocation(new Vector3f(-262.0939f, 1.6659993f, 1494.18f));
+cam.setRotation(new Quaternion(6.8721E-4f, 0.7108508f, 3.3308184E-5f, -0.70334256f));
+Camera Position: (-292.0136, 1.6659989, 1494.2155)
+Camera Rotation: (7.046546E-4, 0.7048692, 8.272461E-6, -0.709337)
+Camera Direction: (-0.9999796, 0.0010113372, 0.0063177943)
+cam.setLocation(new Vector3f(-292.0136f, 1.6659989f, 1494.2155f));
+cam.setRotation(new Quaternion(7.046546E-4f, 0.7048692f, 8.272461E-6f, -0.709337f));
+Camera Position: (-396.13083, 1.6660024, 1494.224)
+Camera Rotation: (6.5290945E-4, 0.7036654, 5.925893E-5, -0.7105313)
+Camera Direction: (-0.99995244, 0.0010112221, 0.009709299)
+cam.setLocation(new Vector3f(-396.13083f, 1.6660024f, 1494.224f));
+cam.setRotation(new Quaternion(6.5290945E-4f, 0.7036654f, 5.925893E-5f, -0.7105313f));
+Camera Position: (-474.39154, 1.6660002, 1494.166)
+Camera Rotation: (6.977462E-4, 0.70905405, 1.8517376E-5, -0.7051538)
+Camera Direction: (-0.9999843, 0.0010102964, -0.0055162907)
+cam.setLocation(new Vector3f(-474.39154f, 1.6660002f, 1494.166f));
+cam.setRotation(new Quaternion(6.977462E-4f, 0.70905405f, 1.8517376E-5f, -0.7051538f));
+Camera Position: (-549.9312, 1.666002, 1494.073)
+Camera Rotation: (6.5288105E-4, 0.70678294, 6.112761E-5, -0.7074302)
+Camera Direction: (-0.9999991, 0.0010101434, 9.149313E-4)
+cam.setLocation(new Vector3f(-549.9312f, 1.666002f, 1494.073f));
+cam.setRotation(new Quaternion(6.5288105E-4f, 0.70678294f, 6.112761E-5f, -0.7074302f));
+Camera Position: (-696.0368, 1.6659888, 1493.5885)
+Camera Rotation: (7.128665E-4, 0.70435995, 1.0634755E-4, -0.7098427)
+Camera Direction: (-0.99996924, 0.0011618598, 0.0077531934)
+cam.setLocation(new Vector3f(-696.0368f, 1.6659888f, 1493.5885f));
+cam.setRotation(new Quaternion(7.128665E-4f, 0.70435995f, 1.0634755E-4f, -0.7098427f));
+Camera Position: (-773.7746, 1.6659989, 1493.8391)
+Camera Rotation: (5.926007E-4, 0.70606375, 1.8453565E-4, -0.708148)
+Camera Direction: (-0.99999505, 0.0010998859, 0.0029472709)
+cam.setLocation(new Vector3f(-773.7746f, 1.6659989f, 1493.8391f));
+cam.setRotation(new Quaternion(5.926007E-4f, 0.70606375f, 1.8453565E-4f, -0.708148f));
+Camera Position: (-827.262, 1.6659888, 1493.8173)
+Camera Rotation: (6.427223E-4, 0.7074378, 1.0452725E-4, -0.7067753)
+Camera Direction: (-0.99999905, 0.0010564135, -9.3734264E-4)
+cam.setLocation(new Vector3f(-827.262f, 1.6659888f, 1493.8173f));
+cam.setRotation(new Quaternion(6.427223E-4f, 0.7074378f, 1.0452725E-4f, -0.7067753f));
+Camera Position: (-887.67773, 1.6660458, 1488.8997)
+Camera Rotation: (-8.4919055E-5, 0.77510434, 6.429279E-4, -0.631833)
+Camera Direction: (-0.9794731, 8.89363E-4, -0.20157337)
+cam.setLocation(new Vector3f(-887.67773f, 1.6660458f, 1488.8997f));
+cam.setRotation(new Quaternion(-8.4919055E-5f, 0.77510434f, 6.429279E-4f, -0.631833f));
+Camera Position: (-932.1614, 1.6660693, 1472.9541)
+Camera Rotation: (-8.2809076E-4, 0.8633063, 0.0010043214, -0.5046787)
+Camera Direction: (-0.8713863, 8.982344E-4, -0.4905969)
+cam.setLocation(new Vector3f(-932.1614f, 1.6660693f, 1472.9541f));
+cam.setRotation(new Quaternion(-8.2809076E-4f, 0.8633063f, 0.0010043214f, -0.5046787f));
+Camera Position: (-962.0013, 1.6660657, 1448.3549)
+Camera Rotation: (-9.6756074E-4, 0.93799317, 8.4153353E-4, -0.3466514)
+Camera Direction: (-0.6503149, 9.078928E-4, -0.7596643)
+cam.setLocation(new Vector3f(-962.0013f, 1.6660657f, 1448.3549f));
+cam.setRotation(new Quaternion(-9.6756074E-4f, 0.93799317f, 8.4153353E-4f, -0.3466514f));
+Camera Position: (-978.9428, 1.6660327, 1421.714)
+Camera Rotation: (-6.939757E-4, 0.9765554, 6.437612E-4, -0.21526419)
+Camera Direction: (-0.4204357, 9.5856073E-4, -0.90732193)
+cam.setLocation(new Vector3f(-978.9428f, 1.6660327f, 1421.714f));
+cam.setRotation(new Quaternion(-6.939757E-4f, 0.9765554f, 6.437612E-4f, -0.21526419f));
+Camera Position: (-990.54987, 1.6660225, 1381.9333)
+Camera Rotation: (-3.7528056E-4, 0.9965814, 6.0424063E-4, -0.08261398)
+Camera Direction: (-0.16466355, 0.001142343, -0.9863491)
+cam.setLocation(new Vector3f(-990.54987f, 1.6660225f, 1381.9333f));
+cam.setRotation(new Quaternion(-3.7528056E-4f, 0.9965814f, 6.0424063E-4f, -0.08261398f));
+Camera Position: (-993.6655, 1.6660099, 1342.1873)
+Camera Rotation: (-1.0846705E-4, 0.99997175, 5.549206E-4, -0.0074981153)
+Camera Direction: (-0.014995927, 0.0011081833, -0.999887)
+cam.setLocation(new Vector3f(-993.6655f, 1.6660099f, 1342.1873f));
+cam.setRotation(new Quaternion(-1.0846705E-4f, 0.99997175f, 5.549206E-4f, -0.0074981153f));
+Camera Position: (-993.7619, 1.6659969, 1302.8943)
+Camera Rotation: (4.2291457E-4, 0.9999997, 5.360167E-4, -3.0963283E-4)
+Camera Direction: (-6.188121E-4, 0.001072295, -0.99999917)
+cam.setLocation(new Vector3f(-993.7619f, 1.6659969f, 1302.8943f));
+cam.setRotation(new Quaternion(4.2291457E-4f, 0.9999997f, 5.360167E-4f, -3.0963283E-4f));
+Camera Position: (-993.5909, 1.665997, 1264.0204)
+Camera Rotation: (4.6541824E-4, 0.9999949, 5.245317E-4, 0.003130096)
+Camera Direction: (0.0062606484, 0.0010461444, -0.99998)
+cam.setLocation(new Vector3f(-993.5909f, 1.665997f, 1264.0204f));
+cam.setRotation(new Quaternion(4.6541824E-4f, 0.9999949f, 5.245317E-4f, 0.003130096f));
+Camera Position: (-993.2877, 1.6659989, 1220.6471)
+Camera Rotation: (4.7470315E-4, 0.99999464, 5.16159E-4, 0.0032063841)
+Camera Direction: (0.0064132237, 0.0010292683, -0.999979)
+cam.setLocation(new Vector3f(-993.2877f, 1.6659989f, 1220.6471f));
+cam.setRotation(new Quaternion(4.7470315E-4f, 0.99999464f, 5.16159E-4f, 0.0032063841f));
+Camera Position: (-992.62994, 1.6660837, 1163.986)
+Camera Rotation: (3.8419486E-4, 0.9999637, 4.76173E-4, 0.008503371)
+Camera Direction: (0.017006489, 9.4577746E-4, -0.9998549)
+cam.setLocation(new Vector3f(-992.62994f, 1.6660837f, 1163.986f));
+cam.setRotation(new Quaternion(3.8419486E-4f, 0.9999637f, 4.76173E-4f, 0.008503371f));
+Camera Position: (-991.90375, 1.6659985, 1123.2313)
+Camera Rotation: (5.171765E-4, 0.9999773, 5.105565E-4, 0.0067019155)
+Camera Direction: (0.013404055, 0.0010141577, -0.99990964)
+cam.setLocation(new Vector3f(-991.90375f, 1.6659985f, 1123.2313f));
+cam.setRotation(new Quaternion(5.171765E-4f, 0.9999773f, 5.105565E-4f, 0.0067019155f));
+Camera Position: (-991.154, 1.6660038, 1066.7012)
+Camera Rotation: (3.8608725E-4, 0.9999566, 5.093393E-4, 0.009292569)
+Camera Direction: (0.018584725, 0.0010114589, -0.9998268)
+cam.setLocation(new Vector3f(-991.154f, 1.6660038f, 1066.7012f));
+cam.setRotation(new Quaternion(3.8608725E-4f, 0.9999566f, 5.093393E-4f, 0.009292569f));
+Camera Position: (-989.99805, 1.6660016, 1013.27045)
+Camera Rotation: (4.492583E-4, 0.99993396, 5.103122E-4, 0.01147239)
+Camera Direction: (0.022943722, 0.0010102489, -0.9997362)
+cam.setLocation(new Vector3f(-989.99805f, 1.6660016f, 1013.27045f));
+cam.setRotation(new Quaternion(4.492583E-4f, 0.99993396f, 5.103122E-4f, 0.01147239f));
+Camera Position: (-988.9749, 1.6660025, 962.0635)
+Camera Rotation: (4.1979022E-4, 0.99995786, 5.087954E-4, 0.009153664)
+Camera Direction: (0.018306984, 0.0010098626, -0.9998318)
+cam.setLocation(new Vector3f(-988.9749f, 1.6660025f, 962.0635f));
+cam.setRotation(new Quaternion(4.1979022E-4f, 0.99995786f, 5.087954E-4f, 0.009153664f));
+Camera Position: (-987.7632, 1.6660025, 897.37506)
+Camera Rotation: (4.1967435E-4, 0.999954, 5.0902524E-4, 0.009569873)
+Camera Direction: (0.019139292, 0.0010099713, -0.9998163)
+cam.setLocation(new Vector3f(-987.7632f, 1.6660025f, 897.37506f));
+cam.setRotation(new Quaternion(4.1967435E-4f, 0.999954f, 5.0902524E-4f, 0.009569873f));
+Camera Position: (-986.42596, 1.6660029, 832.2343)
+Camera Rotation: (3.949036E-4, 0.9999312, 5.05362E-4, 0.011713455)
+Camera Direction: (0.023425696, 0.001001403, -0.9997251)
+cam.setLocation(new Vector3f(-986.42596f, 1.6660029f, 832.2343f));
+cam.setRotation(new Quaternion(3.949036E-4f, 0.9999312f, 5.05362E-4f, 0.011713455f));
+Camera Position: (-985.08966, 1.6660035, 763.0546)
+Camera Rotation: (4.103985E-4, 0.9999794, 5.073968E-4, 0.0063866437)
+Camera Direction: (0.01277344, 0.0010095305, -0.99991786)
+cam.setLocation(new Vector3f(-985.08966f, 1.6660035f, 763.0546f));
+cam.setRotation(new Quaternion(4.103985E-4f, 0.9999794f, 5.073968E-4f, 0.0063866437f));
+Camera Position: (-984.43884, 1.6660023, 717.2271)
+Camera Rotation: (4.1696284E-4, 0.99996966, 5.0821336E-4, 0.007765241)
+Camera Direction: (0.0155304335, 0.0010099201, -0.9998789)
+cam.setLocation(new Vector3f(-984.43884f, 1.6660023f, 717.2271f));
+cam.setRotation(new Quaternion(4.1696284E-4f, 0.99996966f, 5.0821336E-4f, 0.007765241f));
+Camera Position: (-983.9712, 1.6660025, 665.11066)
+Camera Rotation: (4.315448E-4, 0.9999963, 5.061983E-4, 0.002647108)
+Camera Direction: (0.0052946326, 0.0010101082, -0.99998546)
+cam.setLocation(new Vector3f(-983.9712f, 1.6660025f, 665.11066f));
+cam.setRotation(new Quaternion(4.315448E-4f, 0.9999963f, 5.061983E-4f, 0.002647108f));
+Camera Position: (-983.7154, 1.6660023, 609.3965)
+Camera Rotation: (4.318842E-4, 0.99999785, 5.058264E-4, 0.0019522065)
+Camera Direction: (0.0039048416, 0.0010099643, -0.9999918)
+cam.setLocation(new Vector3f(-983.7154f, 1.6660023f, 609.3965f));
+cam.setRotation(new Quaternion(4.318842E-4f, 0.99999785f, 5.058264E-4f, 0.0019522065f));
+Camera Position: (-983.64813, 1.6660017, 557.7379)
+Camera Rotation: (4.6673382E-4, 0.9999989, 5.0507014E-4, -0.001299763)
+Camera Direction: (-0.0025990517, 0.0010113525, -0.9999962)
+cam.setLocation(new Vector3f(-983.64813f, 1.6660017f, 557.7379f));
+cam.setRotation(new Quaternion(4.6673382E-4f, 0.9999989f, 5.0507014E-4f, -0.001299763f));
+Camera Position: (-983.98456, 1.6660013, 506.54654)
+Camera Rotation: (4.5947856E-4, 0.99998754, 5.0308753E-4, -0.0049475385)
+Camera Direction: (-0.009894492, 0.0010107091, -0.99995065)
+cam.setLocation(new Vector3f(-983.98456f, 1.6660013f, 506.54654f));
+cam.setRotation(new Quaternion(4.5947856E-4f, 0.99998754f, 5.0308753E-4f, -0.0049475385f));
+Camera Position: (-984.6606, 1.6660025, 441.85718)
+Camera Rotation: (4.2636436E-4, 0.999987, 5.029075E-4, -0.0050516822)
+Camera Direction: (-0.010102805, 0.0010101097, -0.9999484)
+cam.setLocation(new Vector3f(-984.6606f, 1.6660025f, 441.85718f));
+cam.setRotation(new Quaternion(4.2636436E-4f, 0.999987f, 5.029075E-4f, -0.0050516822f));
+Camera Position: (-985.2015, 1.6659986, 397.3748)
+Camera Rotation: (5.2636425E-4, 0.9999575, 5.005399E-4, -0.0091919685)
+Camera Direction: (-0.01838263, 0.001010714, -0.9998306)
+cam.setLocation(new Vector3f(-985.2015f, 1.6659986f, 397.3748f));
+cam.setRotation(new Quaternion(5.2636425E-4f, 0.9999575f, 5.005399E-4f, -0.0091919685f));
+Camera Position: (-986.5575, 1.6660025, 339.13257)
+Camera Rotation: (4.185881E-4, 0.99993587, 5.042306E-4, -0.011307461)
+Camera Direction: (-0.022613049, 0.0010178628, -0.9997438)
+cam.setLocation(new Vector3f(-986.5575f, 1.6660025f, 339.13257f));
+cam.setRotation(new Quaternion(4.185881E-4f, 0.99993587f, 5.042306E-4f, -0.011307461f));
+Camera Position: (-987.66016, 1.6660002, 290.31088)
+Camera Rotation: (4.836414E-4, 0.9999165, 5.006142E-4, -0.012906692)
+Camera Direction: (-0.025810743, 0.001013629, -0.99966633)
+cam.setLocation(new Vector3f(-987.66016f, 1.6660002f, 290.31088f));
+cam.setRotation(new Quaternion(4.836414E-4f, 0.9999165f, 5.006142E-4f, -0.012906692f));
+Camera Position: (-989.1759, 1.6659983, 245.46481)
+Camera Rotation: (5.4020935E-4, 0.9997645, 4.9429946E-4, -0.02169062)
+Camera Direction: (-0.04337049, 0.001011801, -0.9990586)
+cam.setLocation(new Vector3f(-989.1759f, 1.6659983f, 245.46481f));
+cam.setRotation(new Quaternion(5.4020935E-4f, 0.9997645f, 4.9429946E-4f, -0.02169062f));
+Camera Position: (-992.3955, 1.6660239, 175.79758)
+Camera Rotation: (8.479836E-5, 0.9997458, 4.422299E-4, -0.022541365)
+Camera Direction: (-0.045071196, 8.880579E-4, -0.99898326)
+cam.setLocation(new Vector3f(-992.3955f, 1.6660239f, 175.79758f));
+cam.setRotation(new Quaternion(8.479836E-5f, 0.9997458f, 4.422299E-4f, -0.022541365f));
+Camera Position: (-993.0364, 1.6660178, 151.55283)
+Camera Rotation: (6.8330395E-5, 0.9999885, 4.478962E-4, -0.00477785)
+Camera Direction: (-0.009555529, 8.9643506E-4, -0.999954)
+cam.setLocation(new Vector3f(-993.0364f, 1.6660178f, 151.55283f));
+cam.setRotation(new Quaternion(6.8330395E-5f, 0.9999885f, 4.478962E-4f, -0.00477785f));
+Camera Position: (-992.6565, 1.6660565, 136.15341)
+Camera Rotation: (-8.742065E-4, 0.9994528, 4.1944598E-4, 0.033061672)
+Camera Direction: (0.066086434, 8.962384E-4, -0.99781346)
+cam.setLocation(new Vector3f(-992.6565f, 1.6660565f, 136.15341f));
+cam.setRotation(new Quaternion(-8.742065E-4f, 0.9994528f, 4.1944598E-4f, 0.033061672f));
+Camera Position: (-990.8837, 1.6660624, 121.52751)
+Camera Rotation: (-0.0010538277, 0.9963415, 3.6096282E-4, 0.08545399)
+Camera Direction: (0.17028193, 8.9939195E-4, -0.9853951)
+cam.setLocation(new Vector3f(-990.8837f, 1.6660624f, 121.52751f));
+cam.setRotation(new Quaternion(-0.0010538277f, 0.9963415f, 3.6096282E-4f, 0.08545399f));
+Camera Position: (-986.9588, 1.6660495, 105.09762)
+Camera Rotation: (-7.077875E-4, 0.9898522, 3.5658336E-4, 0.14209872)
+Camera Direction: (0.28131294, 9.07081E-4, -0.9596156)
+cam.setLocation(new Vector3f(-986.9588f, 1.6660495f, 105.09762f));
+cam.setRotation(new Quaternion(-7.077875E-4f, 0.9898522f, 3.5658336E-4f, 0.14209872f));
+Camera Position: (-981.7427, 1.6660444, 90.1769)
+Camera Rotation: (-9.728065E-4, 0.98148566, 2.7350665E-4, 0.19153295)
+Camera Direction: (0.37597317, 9.095347E-4, -0.92663014)
+cam.setLocation(new Vector3f(-981.7427f, 1.6660444f, 90.1769f));
+cam.setRotation(new Quaternion(-9.728065E-4f, 0.98148566f, 2.7350665E-4f, 0.19153295f));
+Camera Position: (-975.49963, 1.6660248, 77.17853)
+Camera Rotation: (-0.0010482962, 0.9684791, 3.0776937E-4, 0.24909247)
+Camera Direction: (0.48248106, 0.0011183817, -0.87590563)
+cam.setLocation(new Vector3f(-975.49963f, 1.6660248f, 77.17853f));
+cam.setRotation(new Quaternion(-0.0010482962f, 0.9684791f, 3.0776937E-4f, 0.24909247f));
+Camera Position: (-966.6145, 1.6660262, 63.152378)
+Camera Rotation: (-0.0011093635, 0.95239973, 2.3775318E-4, 0.30484986)
+Camera Direction: (0.58067733, 0.0011292507, -0.81413305)
+cam.setLocation(new Vector3f(-966.6145f, 1.6660262f, 63.152378f));
+cam.setRotation(new Quaternion(-0.0011093635f, 0.95239973f, 2.3775318E-4f, 0.30484986f));
+Camera Position: (-955.20337, 1.6660289, 49.52603)
+Camera Rotation: (-0.0011020118, 0.9276996, 1.5849764E-4, 0.3733259)
+Camera Direction: (0.69266826, 0.0011168956, -0.72125554)
+cam.setLocation(new Vector3f(-955.20337f, 1.6660289f, 49.52603f));
+cam.setRotation(new Quaternion(-0.0011020118f, 0.9276996f, 1.5849764E-4f, 0.3733259f));
+Camera Position: (-943.72906, 1.6660436, 38.897846)
+Camera Rotation: (-0.001195457, 0.9053839, 4.8776332E-5, 0.42459217)
+Camera Direction: (0.7688378, 0.0011034859, -0.63944304)
+cam.setLocation(new Vector3f(-943.72906f, 1.6660436f, 38.897846f));
+cam.setRotation(new Quaternion(-0.001195457f, 0.9053839f, 4.8776332E-5f, 0.42459217f));
+Camera Position: (-928.8232, 1.6660409, 28.106943)
+Camera Rotation: (-0.0011659069, 0.87656057, -1.8888146E-5, 0.48129013)
+Camera Direction: (0.84375995, 0.0010891658, -0.53671956)
+cam.setLocation(new Vector3f(-928.8232f, 1.6660409f, 28.106943f));
+cam.setRotation(new Quaternion(-0.0011659069f, 0.87656057f, -1.8888146E-5f, 0.48129013f));
+Camera Position: (-914.329, 1.6660519, 20.14997)
+Camera Rotation: (-0.0013068672, 0.8448731, -1.917207E-4, 0.53496516)
+Camera Direction: (0.9039558, 0.0010742976, -0.42762446)
+cam.setLocation(new Vector3f(-914.329f, 1.6660519f, 20.14997f));
+cam.setRotation(new Quaternion(-0.0013068672f, 0.8448731f, -1.917207E-4f, 0.53496516f));
+Camera Position: (-897.1454, 1.6660534, 13.521106)
+Camera Rotation: (-0.0012966413, 0.80515754, -2.9607094E-4, 0.5930594)
+Camera Direction: (0.95501345, 0.0010612034, -0.29656076)
+cam.setLocation(new Vector3f(-897.1454f, 1.6660534f, 13.521106f));
+cam.setRotation(new Quaternion(-0.0012966413f, 0.80515754f, -2.9607094E-4f, 0.5930594f));
+Camera Position: (-879.04846, 1.6660396, 9.250638)
+Camera Rotation: (-0.0010147725, 0.7658091, -1.6454616E-4, 0.64306706)
+Camera Direction: (0.98493373, 0.0010531116, -0.1729294)
+cam.setLocation(new Vector3f(-879.04846f, 1.6660396f, 9.250638f));
+cam.setRotation(new Quaternion(-0.0010147725f, 0.7658091f, -1.6454616E-4f, 0.64306706f));
+Camera Position: (-860.4372, 1.6660485, 7.126167)
+Camera Rotation: (-0.0010774735, 0.7269358, -3.0042566E-4, 0.6867045)
+Camera Direction: (0.99838084, 0.0010430315, -0.05687356)
+cam.setLocation(new Vector3f(-860.4372f, 1.6660485f, 7.126167f));
+cam.setRotation(new Quaternion(-0.0010774735f, 0.7269358f, -3.0042566E-4f, 0.6867045f));
+Camera Position: (-842.46576, 1.66595, 6.9340224)
+Camera Rotation: (-9.721063E-5, 0.70220464, 6.4228976E-4, 0.711975)
+Camera Direction: (0.9999041, 0.0010404608, 0.01381731)
+cam.setLocation(new Vector3f(-842.46576f, 1.66595f, 6.9340224f));
+cam.setRotation(new Quaternion(-9.721063E-5f, 0.70220464f, 6.4228976E-4f, 0.711975f));
+Camera Position: (-825.7349, 1.6659534, 6.849772)
+Camera Rotation: (7.879989E-5, 0.71480227, 8.002828E-4, 0.69932616)
+Camera Direction: (0.99976, 0.0010338743, -0.02188456)
+cam.setLocation(new Vector3f(-825.7349f, 1.6659534f, 6.849772f));
+cam.setRotation(new Quaternion(7.879989E-5f, 0.71480227f, 8.002828E-4f, 0.69932616f));
+Camera Position: (-781.004, 1.6659975, 6.7307544)
+Camera Rotation: (-4.214998E-5, 0.70169973, 6.885025E-4, 0.7124725)
+Camera Direction: (0.9998835, 0.0010263054, 0.015234947)
+cam.setLocation(new Vector3f(-781.004f, 1.6659975f, 6.7307544f));
+cam.setRotation(new Quaternion(-4.214998E-5f, 0.70169973f, 6.885025E-4f, 0.7124725f));
+Camera Position: (-609.15247, 1.6660001, 6.7859764)
+Camera Rotation: (-1.2228592E-5, 0.7069398, 7.029284E-4, 0.70727336)
+Camera Direction: (0.9999994, 0.001011154, 4.72188E-4)
+cam.setLocation(new Vector3f(-609.15247f, 1.6660001f, 6.7859764f));
+cam.setRotation(new Quaternion(-1.2228592E-5f, 0.7069398f, 7.029284E-4f, 0.70727336f));
+Camera Position: (-543.57446, 1.6660085, 6.431532)
+Camera Rotation: (-1.6655006E-4, 0.70689934, 5.47864E-4, 0.7073139)
+Camera Direction: (0.9999993, 0.0010101758, 5.865693E-4)
+cam.setLocation(new Vector3f(-543.57446f, 1.6660085f, 6.431532f));
+cam.setRotation(new Quaternion(-1.6655006E-4f, 0.70689934f, 5.47864E-4f, 0.7073139f));
+Camera Position: (-464.94717, 1.6660048, 6.5165052)
+Camera Rotation: (-9.716175E-5, 0.70681566, 6.177231E-4, 0.7073975)
+Camera Direction: (0.99999917, 0.0010106966, 8.2325935E-4)
+cam.setLocation(new Vector3f(-464.94717f, 1.6660048f, 6.5165052f));
+cam.setRotation(new Quaternion(-9.716175E-5f, 0.70681566f, 6.177231E-4f, 0.7073975f));
+Camera Position: (-394.85568, 1.6660013, 6.970401)
+Camera Rotation: (-3.681273E-5, 0.70506, 6.793218E-4, 0.70914733)
+Camera Direction: (0.9999828, 0.0010101366, 0.0057807565)
+cam.setLocation(new Vector3f(-394.85568f, 1.6660013f, 6.970401f));
+cam.setRotation(new Quaternion(-3.681273E-5f, 0.70506f, 6.793218E-4f, 0.70914733f));
+Camera Position: (-338.24228, 1.6660011, 7.0611734)
+Camera Rotation: (-2.6775366E-5, 0.7081354, 6.86416E-4, 0.7060763)
+Camera Direction: (0.99999523, 0.0010099618, -0.0029115677)
+cam.setLocation(new Vector3f(-338.24228f, 1.6660011f, 7.0611734f));
+cam.setRotation(new Quaternion(-2.6775366E-5f, 0.7081354f, 6.86416E-4f, 0.7060763f));
+Camera Position: (-262.7528, 1.6660043, 6.722419)
+Camera Rotation: (-8.8899E-5, 0.70674706, 6.2547805E-4, 0.707466)
+Camera Direction: (0.9999989, 0.0010098956, 0.0010172129)
+cam.setLocation(new Vector3f(-262.7528f, 1.6660043f, 6.722419f));
+cam.setRotation(new Quaternion(-8.8899E-5f, 0.70674706f, 6.2547805E-4f, 0.707466f));
+Camera Position: (-170.19415, 1.6660042, 6.8748913)
+Camera Rotation: (-2.3485141E-4, 0.70398253, 4.8072E-4, 0.7102171)
+Camera Direction: (0.99996066, 0.001010428, 0.008817077)
+cam.setLocation(new Vector3f(-170.19415f, 1.6660042f, 6.8748913f));
+cam.setRotation(new Quaternion(-2.3485141E-4f, 0.70398253f, 4.8072E-4f, 0.7102171f));
+Camera Position: (-129.33377, 1.6660022, 8.09547)
+Camera Rotation: (-7.493542E-5, 0.68861127, 6.5447885E-4, 0.7251304)
+Camera Direction: (0.9986658, 0.0010100389, 0.051629066)
+cam.setLocation(new Vector3f(-129.33377f, 1.6660022f, 8.09547f));
+cam.setRotation(new Quaternion(-7.493542E-5f, 0.68861127f, 6.5447885E-4f, 0.7251304f));
+Camera Position: (-104.199715, 1.665997, 9.258)
+Camera Rotation: (2.0198215E-5, 0.693923, 7.488157E-4, 0.7200489)
+Camera Direction: (0.999317, 0.0010101533, 0.036941826)
+cam.setLocation(new Vector3f(-104.199715f, 1.665997f, 9.258f));
+cam.setRotation(new Quaternion(2.0198215E-5f, 0.693923f, 7.488157E-4f, 0.7200489f));
+Camera Position: (-80.1757, 1.6660211, 10.488562)
+Camera Rotation: (-4.337979E-4, 0.680469, 1.803483E-4, 0.73277676)
+Camera Direction: (0.99726355, 8.811969E-4, 0.07392359)
+cam.setLocation(new Vector3f(-80.1757f, 1.6660211f, 10.488562f));
+cam.setRotation(new Quaternion(-4.337979E-4f, 0.680469f, 1.803483E-4f, 0.73277676f));
+Camera Position: (-64.985725, 1.6660452, 12.077754)
+Camera Rotation: (-8.1459765E-4, 0.6568159, -2.6238945E-4, 0.75405055)
+Camera Direction: (0.9905451, 8.8381243E-4, 0.13718456)
+cam.setLocation(new Vector3f(-64.985725f, 1.6660452f, 12.077754f));
+cam.setRotation(new Quaternion(-8.1459765E-4f, 0.6568159f, -2.6238945E-4f, 0.75405055f));
+Camera Position: (-49.42438, 1.6660677, 15.117141)
+Camera Rotation: (-0.0010671767, 0.6144096, -6.498255E-4, 0.78898627)
+Camera Direction: (0.96952283, 8.854573E-4, 0.24499941)
+cam.setLocation(new Vector3f(-49.42438f, 1.6660677f, 15.117141f));
+cam.setRotation(new Quaternion(-0.0010671767f, 0.6144096f, -6.498255E-4f, 0.78898627f));
+Camera Position: (-36.183887, 1.6660497, 19.350851)
+Camera Rotation: (-0.0017521189, 0.560085, -0.0018101407, 0.82843137)
+Camera Direction: (0.9279902, 8.753552E-4, 0.37260354)
+cam.setLocation(new Vector3f(-36.183887f, 1.6660497f, 19.350851f));
+cam.setRotation(new Quaternion(-0.0017521189f, 0.560085f, -0.0018101407f, 0.82843137f));
+Camera Position: (-26.279715, 1.6660831, 24.55002)
+Camera Rotation: (0.0020463932, -0.47636676, 0.0028796266, -0.8792396)
+Camera Direction: (0.8376928, 8.550233E-4, 0.5461411)
+cam.setLocation(new Vector3f(-26.279715f, 1.6660831f, 24.55002f));
+cam.setRotation(new Quaternion(0.0020463932f, -0.47636676f, 0.0028796266f, -0.8792396f));
+Camera Position: (-20.231407, 1.6661317, 29.424723)
+Camera Rotation: (0.002124496, -0.39303812, 0.003915589, -0.91951144)
+Camera Direction: (0.72282267, 8.290452E-4, 0.69103307)
+cam.setLocation(new Vector3f(-20.231407f, 1.6661317f, 29.424723f));
+cam.setRotation(new Quaternion(0.002124496f, -0.39303812f, 0.003915589f, -0.91951144f));
+Camera Position: (-11.732732, 1.6659993, 41.555943)
+Camera Rotation: (9.163403E-4, -0.2348686, 0.001901623, -0.97202486)
+Camera Direction: (0.4565997, 8.88148E-4, 0.8896718)
+cam.setLocation(new Vector3f(-11.732732f, 1.6659993f, 41.555943f));
+cam.setRotation(new Quaternion(9.163403E-4f, -0.2348686f, 0.001901623f, -0.97202486f));
+Camera Position: (-7.663956, 1.6660944, 51.421135)
+Camera Rotation: (8.333039E-4, -0.15672885, 0.0024299456, -0.98763835)
+Camera Direction: (0.30958688, 8.843206E-4, 0.95087075)
+cam.setLocation(new Vector3f(-7.663956f, 1.6660944f, 51.421135f));
+cam.setRotation(new Quaternion(8.333039E-4f, -0.15672885f, 0.0024299456f, -0.98763835f));
+Camera Position: (-4.916909, 1.6660194, 62.803097)
+Camera Rotation: (5.218134E-4, -0.09515902, 6.642388E-4, -0.99546176)
+Camera Direction: (0.18945502, 9.124738E-4, 0.981889)
+cam.setLocation(new Vector3f(-4.916909f, 1.6660194f, 62.803097f));
+cam.setRotation(new Quaternion(5.218134E-4f, -0.09515902f, 6.642388E-4f, -0.99546176f));
+Camera Position: (-2.9871738, 1.6660652, 76.906906)
+Camera Rotation: (5.041456E-4, -0.038309157, 0.0012612892, -0.999265)
+Camera Direction: (0.07656328, 9.109122E-4, 0.9970643)
+cam.setLocation(new Vector3f(-2.9871738f, 1.6660652f, 76.906906f));
+cam.setRotation(new Quaternion(5.041456E-4f, -0.038309157f, 0.0012612892f, -0.999265f));
+Camera Position: (-2.649564, 1.6660078, 89.80603)
+Camera Rotation: (4.6914778E-4, 0.0029775589, 2.2153201E-4, -0.99999547)
+Camera Direction: (-0.005954883, 9.396106E-4, 0.9999818)
+cam.setLocation(new Vector3f(-2.649564f, 1.6660078f, 89.80603f));
+cam.setRotation(new Quaternion(4.6914778E-4f, 0.0029775589f, 2.2153201E-4f, -0.99999547f));
+Camera Position: (-3.0326576, 1.666007, 104.092865)
+Camera Rotation: (5.427345E-4, 0.020316705, -1.3789035E-4, -0.99979347)
+Camera Direction: (-0.040625162, 0.0010796417, 0.9991739)
+cam.setLocation(new Vector3f(-3.0326576f, 1.666007f, 104.092865f));
+cam.setRotation(new Quaternion(5.427345E-4f, 0.020316705f, -1.3789035E-4f, -0.99979347f));
+Camera Position: (-3.6394012, 1.665982, 117.79465)
+Camera Rotation: (5.81006E-4, 0.024822645, -2.1000173E-5, -0.99969167)
+Camera Direction: (-0.04963001, 0.001160611, 0.998767)
+cam.setLocation(new Vector3f(-3.6394012f, 1.665982f, 117.79465f));
+cam.setRotation(new Quaternion(5.81006E-4f, 0.024822645f, -2.1000173E-5f, -0.99969167f));
+Camera Position: (-6.142292, 1.665955, 144.04468)
+Camera Rotation: (6.1071425E-4, 0.057968974, -6.412418E-4, -0.998318)
+Camera Direction: (-0.11574373, 0.0011450299, 0.99327844)
+cam.setLocation(new Vector3f(-6.142292f, 1.665955f, 144.04468f));
+cam.setRotation(new Quaternion(6.1071425E-4f, 0.057968974f, -6.412418E-4f, -0.998318f));
+Camera Position: (-8.349782, 1.6659948, 163.86858)
+Camera Rotation: (5.828164E-4, 0.056364946, -3.250005E-4, -0.99841)
+Camera Direction: (-0.11255103, 0.0011271422, 0.9936453)
+cam.setLocation(new Vector3f(-8.349782f, 1.6659948f, 163.86858f));
+cam.setRotation(new Quaternion(5.828164E-4f, 0.056364946f, -3.250005E-4f, -0.99841f));
+Camera Position: (-10.610924, 1.6659994, 182.88983)
+Camera Rotation: (5.7040015E-4, 0.06231964, -2.4247116E-4, -0.99805605)
+Camera Direction: (-0.12439726, 0.0011083612, 0.99223185)
+cam.setLocation(new Vector3f(-10.610924f, 1.6659994f, 182.88983f));
+cam.setRotation(new Quaternion(5.7040015E-4f, 0.06231964f, -2.4247116E-4f, -0.99805605f));
+Camera Position: (-13.9506, 1.6659908, 209.90652)
+Camera Rotation: (5.636188E-4, 0.059401784, -3.593392E-4, -0.9982339)
+Camera Direction: (-0.118594155, 0.001082556, 0.9929422)
+cam.setLocation(new Vector3f(-13.9506f, 1.6659908f, 209.90652f));
+cam.setRotation(new Quaternion(5.636188E-4f, 0.059401784f, -3.593392E-4f, -0.9982339f));
+Camera Position: (-21.2356, 1.6660013, 267.89722)
+Camera Rotation: (5.452766E-4, 0.06539772, -3.4585403E-4, -0.99785906)
+Camera Direction: (-0.13051578, 0.0010429823, 0.99144566)
+cam.setLocation(new Vector3f(-21.2356f, 1.6660013f, 267.89722f));
+cam.setRotation(new Quaternion(5.452766E-4f, 0.06539772f, -3.4585403E-4f, -0.99785906f));
+Camera Position: (-26.779928, 1.6660017, 314.57422)
+Camera Rotation: (5.335936E-4, 0.051074754, -3.8578451E-4, -0.99869466)
+Camera Direction: (-0.10201657, 0.0010263863, 0.99478215)
+cam.setLocation(new Vector3f(-26.779928f, 1.6660017f, 314.57422f));
+cam.setRotation(new Quaternion(5.335936E-4f, 0.051074754f, -3.8578451E-4f, -0.99869466f));
+Camera Position: (-31.009945, 1.6660035, 350.9246)
+Camera Rotation: (5.321905E-4, 0.061874714, -3.4774863E-4, -0.9980837)
+Camera Direction: (-0.12351266, 0.0010193075, 0.9923425)
+cam.setLocation(new Vector3f(-31.009945f, 1.6660035f, 350.9246f));
+cam.setRotation(new Quaternion(5.321905E-4f, 0.061874714f, -3.4774863E-4f, -0.9980837f));
+Camera Position: (-36.11634, 1.6659966, 393.1512)
+Camera Rotation: (5.319326E-4, 0.05790207, -4.093076E-4, -0.998322)
+Camera Direction: (-0.11561026, 0.0010146805, 0.9932941)
+cam.setLocation(new Vector3f(-36.11634f, 1.6659966f, 393.1512f));
+cam.setRotation(new Quaternion(5.319326E-4f, 0.05790207f, -4.093076E-4f, -0.998322f));
+Camera Position: (-40.186832, 1.6660008, 428.79803)
+Camera Rotation: (5.307451E-4, 0.05251803, -4.5128536E-4, -0.9986198)
+Camera Direction: (-0.10489155, 0.0010126238, 0.9944832)
+cam.setLocation(new Vector3f(-40.186832f, 1.6660008f, 428.79803f));
+cam.setRotation(new Quaternion(5.307451E-4f, 0.05251803f, -4.5128536E-4f, -0.9986198f));
+Camera Position: (-43.94038, 1.6660055, 464.5082)
+Camera Rotation: (5.2396E-4, 0.054510497, -3.1896736E-4, -0.998513)
+Camera Direction: (-0.10885921, 0.0010115876, 0.99405664)
+cam.setLocation(new Vector3f(-43.94038f, 1.6660055f, 464.5082f));
+cam.setRotation(new Quaternion(5.2396E-4f, 0.054510497f, -3.1896736E-4f, -0.998513f));
+Camera Position: (-47.714764, 1.6659949, 497.97726)
+Camera Rotation: (5.3188053E-4, 0.056047402, -4.5797296E-4, -0.99842787)
+Camera Direction: (-0.11191906, 0.0010107523, 0.99371684)
+cam.setLocation(new Vector3f(-47.714764f, 1.6659949f, 497.97726f));
+cam.setRotation(new Quaternion(5.3188053E-4f, 0.056047402f, -4.5797296E-4f, -0.99842787f));
+Camera Position: (-54.890675, 1.6660026, 567.2427)
+Camera Rotation: (5.245046E-4, 0.051212687, -3.639815E-4, -0.99868757)
+Camera Direction: (-0.10229133, 0.0010103515, 0.99475396)
+cam.setLocation(new Vector3f(-54.890675f, 1.6660026f, 567.2427f));
+cam.setRotation(new Quaternion(5.245046E-4f, 0.051212687f, -3.639815E-4f, -0.99868757f));
+Camera Position: (-61.51213, 1.665983, 635.6676)
+Camera Rotation: (5.194279E-4, 0.03679824, -3.76053E-4, -0.99932253)
+Camera Direction: (-0.073547, 0.0010104756, 0.99729127)
+cam.setLocation(new Vector3f(-61.51213f, 1.665983f, 635.6676f));
+cam.setRotation(new Quaternion(5.194279E-4f, 0.03679824f, -3.76053E-4f, -0.99932253f));
+Camera Position: (-65.12218, 1.6659982, 682.7093)
+Camera Rotation: (5.233856E-4, 0.035563212, -5.039282E-4, -0.9993672)
+Camera Direction: (-0.07108194, 0.001010266, 0.99746996)
+cam.setLocation(new Vector3f(-65.12218f, 1.6659982f, 682.7093f));
+cam.setRotation(new Quaternion(5.233856E-4f, 0.035563212f, -5.039282E-4f, -0.9993672f));
+Camera Position: (-68.19702, 1.6659981, 730.24084)
+Camera Rotation: (5.185792E-4, 0.027562508, -4.8371308E-4, -0.99961984)
+Camera Direction: (-0.055104565, 0.0010100994, 0.9984801)
+cam.setLocation(new Vector3f(-68.19702f, 1.6659981f, 730.24084f));
+cam.setRotation(new Quaternion(5.185792E-4f, 0.027562508f, -4.8371308E-4f, -0.99961984f));
+Camera Position: (-70.74882, 1.6659977, 777.7977)
+Camera Rotation: (5.1774655E-4, 0.02336777, -5.31005E-4, -0.99972665)
+Camera Direction: (-0.046723317, 0.0010103933, 0.9989074)
+cam.setLocation(new Vector3f(-70.74882f, 1.6659977f, 777.7977f));
+cam.setRotation(new Quaternion(5.1774655E-4f, 0.02336777f, -5.31005E-4f, -0.99972665f));
+Camera Position: (-72.14431, 1.6659999, 829.4478)
+Camera Rotation: (5.0818035E-4, 0.006662735, -4.952186E-4, -0.9999776)
+Camera Direction: (-0.013325673, 0.0010097388, 0.9999107)
+cam.setLocation(new Vector3f(-72.14431f, 1.6659999f, 829.4478f));
+cam.setRotation(new Quaternion(5.0818035E-4f, 0.006662735f, -4.952186E-4f, -0.9999776f));
+Camera Position: (-72.15693, 1.6659957, 875.27936)
+Camera Rotation: (5.0032773E-4, -0.007832196, -6.024502E-4, -0.99996907)
+Camera Direction: (0.015663302, 0.0010100614, 0.9998768)
+cam.setLocation(new Vector3f(-72.15693f, 1.6659957f, 875.27936f));
+cam.setRotation(new Quaternion(5.0032773E-4f, -0.007832196f, -6.024502E-4f, -0.99996907f));
+Camera Position: (-70.816025, 1.6659975, 918.3905)
+Camera Rotation: (4.9267674E-4, -0.022099348, -5.65316E-4, -0.9997555)
+Camera Direction: (0.04418733, 0.0010100988, 0.9990228)
+cam.setLocation(new Vector3f(-70.816025f, 1.6659975f, 918.3905f));
+cam.setRotation(new Quaternion(4.9267674E-4f, -0.022099348f, -5.65316E-4f, -0.9997555f));
+Camera Position: (-68.550316, 1.6659974, 959.21783)
+Camera Rotation: (4.8641913E-4, -0.03313218, -5.7081104E-4, -0.9994507)
+Camera Direction: (0.0662274, 0.0010101283, 0.99780405)
+cam.setLocation(new Vector3f(-68.550316f, 1.6659974f, 959.21783f));
+cam.setRotation(new Quaternion(4.8641913E-4f, -0.03313218f, -5.7081104E-4f, -0.9994507f));
+Camera Position: (-64.86482, 1.6659937, 1004.4445)
+Camera Rotation: (4.7150647E-4, -0.050227422, -6.773293E-4, -0.9987375)
+Camera Direction: (0.10032737, 0.0010098633, 0.994954)
+cam.setLocation(new Vector3f(-64.86482f, 1.6659937f, 1004.4445f));
+cam.setRotation(new Quaternion(4.7150647E-4f, -0.050227422f, -6.773293E-4f, -0.9987375f));
