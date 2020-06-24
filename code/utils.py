@@ -39,11 +39,16 @@ def loadConfigFile(deviceName : str) -> Dict:
         configFilePath = "D:/Masterthesis/thesis_eeg/config/muse_lsl.yaml"
     elif deviceName == "neuroscan":
         configFilePath = "D:/Masterthesis/thesis_eeg/config/neuroscan.yaml"
+    elif deviceName == "muse_lsl_with_open_vibe":
+        configFilePath = "D:/Masterthesis/thesis_eeg/config/muse_lsl_with_open_vibe.yaml"
     else:
         configFilePath = ""
         raise Exception("There is no confiFile for the device '{}'".format(deviceName))
     
     print ("Loading the config file for {}".format(deviceName))
+
+    if not os.path.isfile(configFilePath):
+        raise Exception("The Configfile '' does not exists!".format(configFilePath))
 
     with open(configFilePath, 'r') as stream:
         try:

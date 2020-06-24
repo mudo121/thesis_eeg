@@ -74,7 +74,8 @@ def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : 
 
 
 def processRawDatasetToPickleFiles(datasetDirPath : str, device : str, awakeFileName : str,
-                                   fatigueFileName : str, normalFileName : str, unlabeledFileName : str):
+                                   fatigueFileName : str, normalFileName : str, unlabeledFileName : str,
+                                   skipDirs : List[str]):
     '''
     @param str datasetDirPath: Path where the directory of the dataset is
     @param str device: name of the device, to load the correct yaml file for processing
@@ -94,33 +95,39 @@ def processRawDatasetToPickleFiles(datasetDirPath : str, device : str, awakeFile
     
     for root, dirs, files in os.walk(datasetDirPath):
         for subjectDir in dirs:
-            print("#############################################")
-            print("Process Subject {} Data...".format(subjectDir))
-            print("---------------------------------------------")
+
+            if subjectDir not in skipDirs:
+
+                print("#############################################")
+                print("Process Subject {} Data...".format(subjectDir))
+                print("---------------------------------------------")
+                
+                if awakeFileName is not None: 
+                    safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, awakeFileName),
+                                                    fileDir=os.path.join(root, subjectDir),
+                                                    label = "awake",
+                                                    yamlConfig=yamlConfig)
+                    
+                if fatigueFileName is not None: 
+                    safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, fatigueFileName),
+                                                    fileDir=os.path.join(root, subjectDir),
+                                                    label = "fatigue",
+                                                    yamlConfig=yamlConfig)
+                    
+                if normalFileName is not None: 
+                    safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, normalFileName),
+                                                    fileDir=os.path.join(root, subjectDir),
+                                                    label = "normal",
+                                                    yamlConfig=yamlConfig)
+                    
+                if unlabeledFileName is not None: 
+                    safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, unlabeledFileName),
+                                                    fileDir=os.path.join(root, subjectDir),
+                                                    label = "unlabeled",
+                                                    yamlConfig=yamlConfig)
             
-            if awakeFileName is not None: 
-                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, awakeFileName),
-                                                  fileDir=os.path.join(root, subjectDir),
-                                                  label = "awake",
-                                                  yamlConfig=yamlConfig)
-                
-            if fatigueFileName is not None: 
-                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, fatigueFileName),
-                                                  fileDir=os.path.join(root, subjectDir),
-                                                  label = "fatigue",
-                                                  yamlConfig=yamlConfig)
-                
-            if normalFileName is not None: 
-                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, normalFileName),
-                                                  fileDir=os.path.join(root, subjectDir),
-                                                  label = "normal",
-                                                  yamlConfig=yamlConfig)
-                
-            if unlabeledFileName is not None: 
-                safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, normalFileName),
-                                                  fileDir=os.path.join(root, subjectDir),
-                                                  label = "unlabeled",
-                                                  yamlConfig=yamlConfig)
+            else:
+                print(" *********** Skipping {} ***********".format(subjectDir))
     
     print("#######################################")
     print("Done processing and saving a complete Dataset!")
