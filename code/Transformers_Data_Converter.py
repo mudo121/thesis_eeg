@@ -43,6 +43,18 @@ class ExtractSignals(BaseEstimator, TransformerMixin):
 
             return new_df, featureList
 
+        elif self.device == DEVICES_MUSE_LSL_OPEN_VIBE:
+            # Delete the right aux, epoch and the events
+            df.drop(['Epoch', 'Right AUX', 'Event Id', 'Event Date', 'Event Duration'], axis=1, inplace=True)
+            
+            # copy the current columns
+            featureList = list(df.columns)
+
+            # And rename the columns to channel 1-4
+            df.rename(columns={"TP9": "channel_1", "AF7": "channel_2", "AF8": "channel_3", "TP10" : "channel_4"}, errors="raise", inplace=True)
+
+            return df, featureList
+
         elif self.device == DEVICES_MUSE_LSL:
             
             # Delete the right aux and marker column
@@ -116,9 +128,15 @@ class ConvertIndexToTimestamp(BaseEstimator, TransformerMixin):
             df.set_index(df['Time:125Hz'], inplace=True)
             del df['Time:125Hz']
 
+        elif self.device == DEVICES_MUSE_LSL_OPEN_VIBE:
+            df['Time:256Hz'] = pd.to_datetime(df['Time:256Hz'])
+            # set new index and delete the Time:256Hz column
+            df.set_index(df['Time:256Hz'], inplace=True)
+            del df['Time:256Hz']
+
         elif self.device == DEVICES_MUSE_LSL:
             df['timestamps'] = pd.to_datetime(df['timestamps'], unit='s')
-            # set new index and delete the Time125Hz column
+            # set new index and delete the timestamps column
             df.set_index(df['timestamps'], inplace=True)
             del df['timestamps']
 

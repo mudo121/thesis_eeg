@@ -2,6 +2,7 @@ DEVICES_MUSE_MONITOR = "muse_monitor"
 DEVICES_OPEN_BCI = "open_bci"
 DEVICES_MUSE_LSL = "muse-lsl"
 DEVICES_NEUROSCAN = "neuroscan"
+DEVICES_MUSE_LSL_OPEN_VIBE = "muse_lsl_with_open_vibe"
 
 SUPPORTED_DEVICES = [DEVICES_MUSE_MONITOR,
                      DEVICES_OPEN_BCI,

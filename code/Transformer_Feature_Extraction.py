@@ -388,8 +388,20 @@ class Frequency_Features(BaseEstimator, TransformerMixin):
         stDev_valueList = []
         start = 0
         end = numberOfEpochs
+
         for i in range(0, len(valueList), numberOfEpochs):
-            value = statistics.stdev(valueList[start:end])
+            
+            #print("Start: {} - End: {} - number of epochs: {} - value list len: {}".format(start, end, numberOfEpochs, len(valueList)))
+
+            if start == len(valueList)-1:
+                # it can happen that 'start' is the last element on the value list, the we say the std is zero
+                value = 0
+            elif end <= len(valueList)-1:
+                # it can happen, that 'end' is greater than the length of the value list, then just use everything from start to : (the end)
+                value = statistics.stdev(valueList[start:])
+            else:
+                value = statistics.stdev(valueList[start:end])
+            
             stDev_valueList.append(value)
             start += numberOfEpochs
             end += numberOfEpochs

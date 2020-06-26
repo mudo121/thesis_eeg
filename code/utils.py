@@ -6,6 +6,7 @@ import numpy as np
 from typing import List, Dict
 import yaml
 import io
+import os
 
 def readFileCSV(filePath : str) -> pd.DataFrame:
     ''' Loads a csv file and returns a pandas data frame '''
@@ -38,11 +39,16 @@ def loadConfigFile(deviceName : str) -> Dict:
         configFilePath = "D:/Masterthesis/thesis_eeg/config/muse_lsl.yaml"
     elif deviceName == "neuroscan":
         configFilePath = "D:/Masterthesis/thesis_eeg/config/neuroscan.yaml"
+    elif deviceName == "muse_lsl_with_open_vibe":
+        configFilePath = "D:/Masterthesis/thesis_eeg/config/muse_lsl_with_open_vibe.yaml"
     else:
         configFilePath = ""
         raise Exception("There is no confiFile for the device '{}'".format(deviceName))
     
     print ("Loading the config file for {}".format(deviceName))
+
+    if not os.path.isfile(configFilePath):
+        raise Exception("The Configfile '' does not exists!".format(configFilePath))
 
     with open(configFilePath, 'r') as stream:
         try:
@@ -136,3 +142,40 @@ def createEmptyNumpyArray(d1, d2=None, d3=None):
     
     print("Created Numpy Array - Shape: {}".format(numpyArray.shape))
     return numpyArray
+
+
+def convert_filename_to_timestamp(filename):
+    try:
+        date = filename[filename.find('[')+1 : filename.find(']')].split('-')[0].replace('.','-')
+        time = filename[filename.find('[')+1 : filename.find(']')].split('-')[1].replace('.',':')
+
+        return pd.Timestamp('{} {}'.format(date, time))
+    except Excetion as e:
+        print("Could not convert '{}' to timestamp".format(filename))
+        print(e)
+        return None
+
+def load_data_from_subject_dir(subject_dir : str, file_name_includes : str = "driving", index_col : str ="Time:256Hz") -> List[pd.DataFrame]:
+    ''' Loads all .csv files into a list of pandas dateframes from a given directory of a subject
+    
+    If file_name_includes is 'driving' then it will look for files, which are containing this name in the filename, and tries to load it as a dataframe
+    '''
+    data = []
+    
+    for root, dirs, files in os.walk(subject_dir):
+        for file in files:
+            if file_name_includes in file and 'complete' not in file: # check if this part is in the filename e.g. 'driving' but NOT 'complete' that's how the finall csv. gets named
+                try:
+                    print("Found '{}'".format(file))
+                    csvPath = os.path.join(subject_dir, file)
+                    
+                    df = pd.read_csv(csvPath, index_col=index_col)
+                    df.index = pd.to_datetime(df.index, unit='s', origin=convert_filename_to_timestamp(file))
+                    data.append(df)
+                    
+                except Exception as e:
+                    print("Could not load '{}' as csv!".format(csvPath))
+                    raise(e)
+    
+    print("Found {} dataset(s) containing '{}'".format(len(data), file_name_includes))
+    return data
