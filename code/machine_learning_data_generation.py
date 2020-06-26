@@ -38,7 +38,7 @@ def processRawFileWithPipeline(filepath : str, yamlConfig) -> (pd.Series, pd.Dat
     return epochSeries, frequencyFeatureDf, channelNameList, entropyArray, entropyFeatureList
 
 
-def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : str, yamlConfig):
+def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : str, yamlConfig, extraLabel : str = None):
     ''' Process the given rawfilePath and safe the result as pickle files
     This function calls 'processRawFileWithPipeline()' and the two returning data objects will be safed
     
@@ -46,36 +46,43 @@ def safeAndProcessRawFileWithPipeline(rawFilePath : str, fileDir : str, label : 
     @param str fileDir: Directory where the data objects should be stored
     @param str label: A label to know which data we process, e.g. fatigue, normal or awake data
     @param yamlConfig: A loaded yaml config file for processing the data
+    @param str extraLabel: Can be used to add an extra text to the filenames. E.g. the source of the data (P300, concentration game, driving...)
     '''
     print ("Starting to process {}...".format(rawFilePath))
     # process the file
     epochSeries, frequencyFeatureDf, channelNameList, entropyArray, entropyFeatureList = processRawFileWithPipeline(filepath=rawFilePath, yamlConfig=yamlConfig)
     
     # save the epoch series
-    epochSeries.to_pickle(os.path.join(fileDir, 'epochSeries_{}.pkl'.format(label)))
+    fileName = 'epochSeries_{}_{}.pkl'.format(extraLabel, label) if extraLabel else 'epochSeries_{}.pkl'.format(label)
+    epochSeries.to_pickle(os.path.join(fileDir, fileName))
     
     # save the frequency df
-    frequencyFeatureDf.to_pickle(os.path.join(fileDir, 'frequencyFeaturesDf_{}.pkl'.format(label)))
+    fileName = 'frequencyFeaturesDf_{}_{}.pkl'.format(extraLabel, label) if extraLabel else 'frequencyFeaturesDf_{}.pkl'.format(label)
+    frequencyFeatureDf.to_pickle(os.path.join(fileDir, fileName))
     
     # save the channel name list
+    fileName = 'features_channel_names_{}.txt'.format(extraLabel) if extraLabel else 'features_channel_names.txt'
     saveFeatureListToFile(featureList=channelNameList,
-                          filepath=os.path.join(fileDir, "features_channel_names.txt"))
+                          filepath=os.path.join(fileDir, fileName))
     
     # save frequency features
+    fileName = 'features_frequency_df_{}.txt'.format(extraLabel) if extraLabel else 'features_frequency_df.txt'
     saveFeatureListToFile(featureList=list(frequencyFeatureDf.columns),
-                          filepath=os.path.join(fileDir, "features_frequency_df.txt"))
+                          filepath=os.path.join(fileDir, fileName))
 
     # Save entropy array (not a pickle file)
-    np.save(os.path.join(fileDir, "entropyFeatures_{}.npy".format(label)), entropyArray)
+    fileName = 'entropyFeatures_{}_{}.npy'.format(extraLabel, label) if extraLabel else 'entropyFeatures_{}.npy'.format(label)
+    np.save(os.path.join(fileDir, fileName), entropyArray)
 
     # Save entropy feature list
+    fileName = 'features_entropy_{}.txt'.format(extraLabel) if extraLabel else 'features_entropy.txt'
     saveFeatureListToFile(featureList=entropyFeatureList,
-                          filepath=os.path.join(fileDir, "features_entropy.txt"))
+                          filepath=os.path.join(fileDir, fileName))
 
 
 def processRawDatasetToPickleFiles(datasetDirPath : str, device : str, awakeFileName : str,
                                    fatigueFileName : str, normalFileName : str, unlabeledFileName : str,
-                                   skipDirs : List[str]):
+                                   skipDirs : List[str], extraLabel : str = None):
     '''
     @param str datasetDirPath: Path where the directory of the dataset is
     @param str device: name of the device, to load the correct yaml file for processing
@@ -85,6 +92,7 @@ def processRawDatasetToPickleFiles(datasetDirPath : str, device : str, awakeFile
     @param fatigueFileName: filename of the fatigue data or None then it will be ignored
     @param normalFileName: filename of the normal data or None then it will be ignored
     @param unlabeledFileName: filename of the unlabeled data or None then it will be ignored
+    @param str extraLabel: If not None, then this will be added to every file, e.g. the source of the data (P300, game, driving, ...)
     '''
     
     if not os.path.isdir(datasetDirPath):
@@ -106,60 +114,64 @@ def processRawDatasetToPickleFiles(datasetDirPath : str, device : str, awakeFile
                     safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, awakeFileName),
                                                     fileDir=os.path.join(root, subjectDir),
                                                     label = "awake",
-                                                    yamlConfig=yamlConfig)
+                                                    yamlConfig=yamlConfig,
+                                                    extraLabel=extraLabel)
                     
                 if fatigueFileName is not None: 
                     safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, fatigueFileName),
                                                     fileDir=os.path.join(root, subjectDir),
                                                     label = "fatigue",
-                                                    yamlConfig=yamlConfig)
+                                                    yamlConfig=yamlConfig,
+                                                    extraLabel=extraLabel)
                     
                 if normalFileName is not None: 
                     safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, normalFileName),
                                                     fileDir=os.path.join(root, subjectDir),
                                                     label = "normal",
-                                                    yamlConfig=yamlConfig)
+                                                    yamlConfig=yamlConfig,
+                                                    extraLabel=extraLabel)
                     
                 if unlabeledFileName is not None: 
                     safeAndProcessRawFileWithPipeline(rawFilePath=os.path.join(root, subjectDir, unlabeledFileName),
                                                     fileDir=os.path.join(root, subjectDir),
                                                     label = "unlabeled",
-                                                    yamlConfig=yamlConfig)
+                                                    yamlConfig=yamlConfig,
+                                                    extraLabel=extraLabel)
             
             else:
-                print(" *********** Skipping {} ***********".format(subjectDir))
+                print(" *********** Skipping Directory '{}' ***********".format(subjectDir))
     
     print("#######################################")
     print("Done processing and saving a complete Dataset!")
 
 
-def loadPickeldData(dataDir : str, label : str):
+def loadPickeldData(dataDir : str, label : str, epochSeries : str = 'epochSeries_{}.pkl', frequencyData : str = 'frequencyFeaturesDf_{}.pkl', entropyData : str = 'entropyFeatures_{}.npy'):
     ''' Load the epochseries and frequency feature df
     
     @param str dataDir: Directory where the data is
     @param str label: decide which
     '''
     try:
-        epochSeries = pd.read_pickle(os.path.join(dataDir, 'epochSeries_{}.pkl'.format(label.lower())))
+        epochSeries = pd.read_pickle(os.path.join(dataDir, epochSeries.format(label.lower())))
     except Exception as e:
         #print (e)
         epochSeries = None
         
     try:
-        frequencyFeatureDf = pd.read_pickle(os.path.join(dataDir, 'frequencyFeaturesDf_{}.pkl'.format(label.lower())))
+        frequencyFeatureDf = pd.read_pickle(os.path.join(dataDir, frequencyData.format(label.lower())))
     except Exception as e:
         #print (e)
         frequencyFeatureDf = None
 
     try:
-        entropy_3d_array = np.load(os.path.join(dataDir, 'entropyFeatures_{}.npy'.format(label.lower())))
+        entropy_3d_array = np.load(os.path.join(dataDir, entropyData.format(label.lower())))
     except Exception as e:
         entropy_3d_array = None
 
     return epochSeries, frequencyFeatureDf, entropy_3d_array
 
 
-def loadPickeldDataset(datasetDirPath:str) -> Dict:
+def loadPickeldDataset(datasetDirPath:str, skipDirs : List[str]) -> Dict:
     ''' This functions loads a complete dataset into a dict
     
     Each subject should have a folder with a number in that dict.
@@ -177,24 +189,29 @@ def loadPickeldDataset(datasetDirPath:str) -> Dict:
     
     for root, dirs, files in os.walk(datasetDirPath):
         for subjectDir in dirs:
-            print("Load Subject {} Data...".format(subjectDir))
+
+            if subjectDir not in skipDirs:
+                print("Load Subject {} Data...".format(subjectDir))
             
-            epochSeries_awake, frequencyFeatureDf_awake, entropy_3d_array_awake = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                                            label=TARGET_AWAKE)
-            
-            epochSeries_normal, frequencyFeatureDf_normal, entropy_3d_array_normal = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                                              label=TARGET_NORMAL)
-            
-            epochSeries_fatigue, frequencyFeatureDf_fatigue, entropy_3d_array_fatigue = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                                                label=TARGET_FATIGUE)
-            
-            epochSeries_unlabeled, frequencyFeatureDf_unlabeled, entropy_3d_array_unlabeled = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
-                                                                                                    label=TARGET_UNLABELED)
-            
-            datasetDict[subjectDir] = {TARGET_AWAKE : (epochSeries_awake, frequencyFeatureDf_awake, entropy_3d_array_awake),
-                                       TARGET_NORMAL : (epochSeries_normal, frequencyFeatureDf_normal, entropy_3d_array_normal),
-                                       TARGET_FATIGUE : (epochSeries_fatigue, frequencyFeatureDf_fatigue, entropy_3d_array_fatigue),
-                                       TARGET_UNLABELED : (epochSeries_unlabeled, frequencyFeatureDf_unlabeled, entropy_3d_array_unlabeled)}
+                epochSeries_awake, frequencyFeatureDf_awake, entropy_3d_array_awake = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                                      label=TARGET_AWAKE)
+                
+                epochSeries_normal, frequencyFeatureDf_normal, entropy_3d_array_normal = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                                label=TARGET_NORMAL)
+                
+                epochSeries_fatigue, frequencyFeatureDf_fatigue, entropy_3d_array_fatigue = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                                    label=TARGET_FATIGUE)
+                
+                epochSeries_unlabeled, frequencyFeatureDf_unlabeled, entropy_3d_array_unlabeled = loadPickeldData(dataDir = os.path.join(datasetDirPath, subjectDir),
+                                                                                                        label=TARGET_UNLABELED)
+                
+                datasetDict[subjectDir] = {TARGET_AWAKE : (epochSeries_awake, frequencyFeatureDf_awake, entropy_3d_array_awake),
+                                        TARGET_NORMAL : (epochSeries_normal, frequencyFeatureDf_normal, entropy_3d_array_normal),
+                                        TARGET_FATIGUE : (epochSeries_fatigue, frequencyFeatureDf_fatigue, entropy_3d_array_fatigue),
+                                        TARGET_UNLABELED : (epochSeries_unlabeled, frequencyFeatureDf_unlabeled, entropy_3d_array_unlabeled)}
+            else:
+                print ("********* Skipping dir '{}' *********".format(subjectDir))
+
     return datasetDict
 
 
