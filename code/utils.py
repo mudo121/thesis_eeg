@@ -150,21 +150,24 @@ def convert_filename_to_timestamp(filename):
         time = filename[filename.find('[')+1 : filename.find(']')].split('-')[1].replace('.',':')
 
         return pd.Timestamp('{} {}'.format(date, time))
-    except Excetion as e:
+    except Exception as e:
         print("Could not convert '{}' to timestamp".format(filename))
         print(e)
         return None
 
-def load_data_from_subject_dir(subject_dir : str, file_name_includes : str = "driving", index_col : str ="Time:256Hz") -> List[pd.DataFrame]:
+def load_data_from_subject_dir(subject_dir:str, file_name_includes:str = "driving", index_col:str ="Time:256Hz") -> List[pd.DataFrame]:
     ''' Loads all .csv files into a list of pandas dateframes from a given directory of a subject
     
     If file_name_includes is 'driving' then it will look for files, which are containing this name in the filename, and tries to load it as a dataframe
     '''
     data = []
+
+    filesToExclude = ['complete', 'driving_fatigue.csv', 'driving_complete.csv', 'reaction_game_complete.csv']
+    print("Files to exclude: {}".format(filesToExclude))
     
     for root, dirs, files in os.walk(subject_dir):
         for file in files:
-            if file_name_includes in file and 'complete' not in file: # check if this part is in the filename e.g. 'driving' but NOT 'complete' that's how the finall csv. gets named
+            if file_name_includes in file and file not in filesToExclude: # check if this part is in the filename e.g. 'driving' but NOT 'complete' that's how the finall csv. gets named
                 try:
                     print("Found '{}'".format(file))
                     csvPath = os.path.join(subject_dir, file)
