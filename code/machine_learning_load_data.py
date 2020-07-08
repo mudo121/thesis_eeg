@@ -66,6 +66,6 @@ def loadOnlineEEGdata(dirPath="D:/Masterthesis/EEG_Data/eeg_data_online", splitD
 
         eegData = (X_eeg, y_eeg)
         freqData = (X_freq, y_freq)
-        entropyData = (X_entropy, y_freq)
+        entropyData = (X_entropy, y_entropy)
     
     return (eegData, freqData, entropyData)
