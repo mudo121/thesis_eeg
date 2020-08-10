@@ -10,23 +10,41 @@
 
 
 # Description of the Repo
-### Code Folder
+### 'Code' Folder
 This folder contains everything related to the own programmed Pipeline. It contains of transformers, utility functions, plot functions, measering functions and functions to load/save/create Data.
 
-### Config Folder
-This Folder contains yaml config files for each used System.
+### 'machine_learning_notebooks' Folder
+This folder contains multiple jupyter notebooks for various created classifiers. 
+ - **compare_classificators.ipynb** Creates various classifiers and creates a ROC Curve and compares it with each classifiers
+ - **evaluate_models_detailed.ipynb** Evaluates multiple classifiers with a confusion matrix, accuracy, F1 Score, Recall and Precision and compares them with the different datasets.
+ - **test_classifiers.ipynb** Here a grid search for multiple classifiers can be done.
+ - **pauls_work.ipynb** (Neural Network Folder) Here multiple neural networks have been craeted and can be evaluated. (Done with the Help of Paul)
+ - The other Notebooks are classifier specific.
+ 
+### 'captureData' Folder
+Contains the notebooks, which have been used for the experiments to capture the video camera and the Muse S EEG Data.
+
+### 'Config' Folder
+This Folder contains yaml config files for each used System. The config is partly explained in the code but also explained in the Thesis.
 **TODO** - Write down each point of the config file
 
-### Generated Data Folder
-(Outdated) - Should be removed. The generated Data should be saved outside the Git because the Data can get too big.
+### 'data_processing' Folder
+This folder contains notebooks to extract/process the raw EEG data from the experiments. There the 5 minutes of fatigue from the 40 minute drive will be extracted. Also the 5 minutes of awake will be extracted from the reaction game
 
-### Jupyter Notebook Overview
-- **main_notebook** - (currently outdated) - Includes some developed Code, which is now being used
-- **processRawDataset** - Shows the functions on how to process a raw .csv file into processed Files (pickeled) and machine learning ready files (.npy)
-- **test_online_eeg_data** - Notebook which has processed the available [online EEG Data](https://figshare.com/articles/The_original_EEG_data_for_driver_fatigue_detection/5202739). This Data was in a different format and needed to be downsampeled.
-- **test_pipeline** - Notebook which calls parts of the used pipeline indepently, for testing purposes
-- **testMuse** - Notebook to test/play with Muse Data (a bit outdated and hasn't been tested with the pipeline yet)
-- Machine Learning Notebooks - Contains notebooks which are using machine learning ready data
-  - **lstm** - Long-Short Term Memory Notebook (Keras) - Tested with online EEG Data
-  - **knn** - K-near Neihbours Notebook (Scikit Learn) - Tested with online EEG Data
-  - **svm** - Support Vector Machine Notebook (Scikit Learn) - Tested with online EEG Data
+### 'driving_simulator' Folder
+This folder contains the scenario settings and files for the used driving simulator with OpenDS 4.5. It also contains a notebook to create waypoints for the auto "bots" to drive around.
+
+### 'images' folder
+This is just a temporary folder to store created images from the notebooks.
+
+### 'openVibeScenarios' Folder
+This fodler contains the created scenarios for openVibe. 
+
+## 'old_notebooks' Folder
+Contains a bunch of notebooks, which have been created but got not really used in the end.
+
+### Repo Files Overview
+- **processRawDataset.ipynb** - Shows the functions on how to process a raw .csv file into processed Files (pickeled) and machine learning ready files (.npy) and how they can get loaded.
+- **thesis_diagrmas.ipynb** - A notebook which creates nearly all images needed for the Thesis.
+- **experiment_protocol.odt** - Contains the used experiment protocol.
+
