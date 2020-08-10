@@ -47,4 +47,5 @@ Contains a bunch of notebooks, which have been created but got not really used i
 - **processRawDataset.ipynb** - Shows the functions on how to process a raw .csv file into processed Files (pickeled) and machine learning ready files (.npy) and how they can get loaded.
 - **thesis_diagrmas.ipynb** - A notebook which creates nearly all images needed for the Thesis.
 - **experiment_protocol.odt** - Contains the used experiment protocol.
+- **diagrams.pptx** - Contains multiple diagrams created for the thesis.
 
