@@ -10,6 +10,13 @@
 
 
 # Description of the Repo
+
+### Repo Files Overview
+- **processRawDataset.ipynb** - Shows the functions on how to process a raw .csv file into processed Files (pickeled) and machine learning ready files (.npy) and how they can get loaded.
+- **thesis_diagrmas.ipynb** - A notebook which creates nearly all images needed for the Thesis.
+- **experiment_protocol.odt** - Contains the used experiment protocol.
+- **diagrams.pptx** - Contains multiple diagrams created for the thesis.
+
 ### 'Code' Folder
 This folder contains everything related to the own programmed Pipeline. It contains of transformers, utility functions, plot functions, measering functions and functions to load/save/create Data.
 
@@ -40,12 +47,6 @@ This is just a temporary folder to store created images from the notebooks.
 ### 'openVibeScenarios' Folder
 This fodler contains the created scenarios for openVibe. 
 
-## 'old_notebooks' Folder
+### 'old_notebooks' Folder
 Contains a bunch of notebooks, which have been created but got not really used in the end.
-
-### Repo Files Overview
-- **processRawDataset.ipynb** - Shows the functions on how to process a raw .csv file into processed Files (pickeled) and machine learning ready files (.npy) and how they can get loaded.
-- **thesis_diagrmas.ipynb** - A notebook which creates nearly all images needed for the Thesis.
-- **experiment_protocol.odt** - Contains the used experiment protocol.
-- **diagrams.pptx** - Contains multiple diagrams created for the thesis.
 
